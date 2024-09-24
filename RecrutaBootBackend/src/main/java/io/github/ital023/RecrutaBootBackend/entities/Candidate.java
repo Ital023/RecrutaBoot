@@ -12,8 +12,11 @@ public class Candidate {
 
     private String name;
     private String description;
-    @Column(columnDefinition = "TEXT")
-    private String avatarUrl;
+    private String githubUsername;
+
+    @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL)
+    private GithubProfile githubProfile;
+
 
     public Candidate() {
     }
