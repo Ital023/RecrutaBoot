@@ -24,10 +24,21 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color.fromARGB(255, 31, 97, 151),
       ),
       drawer: const CustomDrawerHeader(),
-      body: Row(
+      body: Column(
         children: [
-          BannerHomePage()
-          
+          BannerHomePage(),
+          Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              children: [
+                Image.network("https://avatars.githubusercontent.com/u/113559117?v=4", height: 64, width: 64,)
+              ],
+            ),
+          )
         ],
       ),
     );
