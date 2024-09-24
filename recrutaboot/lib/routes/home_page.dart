@@ -15,16 +15,23 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         centerTitle: true,
         iconTheme: const IconThemeData(
-          color: Colors.white, // Altera a cor do ícone do menu (hambúrguer)
-          size: 30, // Altera o tamanho do ícone
+          color: Colors.white,
+          size: 30, 
         ),
         title: const Text("RecrutaBoot",
             style: TextStyle(fontSize: 25, color: Colors.white)),
         backgroundColor: Colors.green,
       ),
       drawer: const CustomDrawerHeader(),
-      body: const Center(
-        child: Text("Teste"),
+      body: Row(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width * 0.5,
+            child: Image.asset("assets/images/banner.jpg", fit: BoxFit.cover)
+            ),
+        
+        ],
       ),
     );
   }
