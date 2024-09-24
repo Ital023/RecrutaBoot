@@ -14,7 +14,7 @@ public class CandidateService {
     @Autowired
     private CandidateRepository repository;
 
-    public List<CandidateDTO> findAll() {
+    public List<CandidateDTO> getAll() {
         List<Candidate> candidates = repository.findAll();
         return candidates.stream().map(x -> new CandidateDTO(x)).toList();
     }
