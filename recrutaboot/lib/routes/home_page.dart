@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recrutaboot/components/header/custom_drawer_header.dart';
 import 'package:recrutaboot/components/homePage/banner_home_page.dart';
+import 'package:recrutaboot/components/homePage/users_recent_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,39 +41,10 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 12,
                   ),
-                  Container(
-                    padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(6)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                            radius: 32,
-                            backgroundImage: NetworkImage(
-                                "https://avatars.githubusercontent.com/u/113559117?v=4"),
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Italo Miranda", style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
-                              ),),
-                              Text("Desenvolvedor Mobile")
-                            ],
-                          ),
-                            ],
-                          ),
-                          Icon(Icons.arrow_forward_ios)
-                        ],
-                      ))
+                  UsersRecentCard(),
+                  UsersRecentCard(),
+                  
+
                 ],
               ),
             ),
