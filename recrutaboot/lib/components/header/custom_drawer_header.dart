@@ -8,7 +8,7 @@ class CustomDrawerHeader extends StatelessWidget {
     return Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: const [
+          children: [
             DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.green
@@ -30,7 +30,28 @@ class CustomDrawerHeader extends StatelessWidget {
                 ],
               ),
               
-              )
+              ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text("Home"),
+              onTap: () => null,
+            ),
+            ListTile(
+              leading: Icon(Icons.business),
+              title: Text("Meus candidatos"),
+              onTap: () => null,
+            ),
+            ListTile(
+              leading: Icon(Icons.group_add),
+              title: Text("Registrar candidato"),
+              onTap: () => null,
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text("Sair da conta"),
+              onTap: () => null,
+            ),
           ],
         ),
       );

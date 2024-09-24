@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recrutaboot/home_page.dart';
+import 'package:recrutaboot/routes/home_page.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
