@@ -21,13 +21,13 @@ class _HomePageState extends State<HomePage> {
         ),
         title: const Text("RecrutaBoot",
             style: TextStyle(fontSize: 25, color: Colors.white)),
-        backgroundColor: Colors.green,
+        backgroundColor: const Color.fromARGB(255, 31, 97, 151),
       ),
       drawer: const CustomDrawerHeader(),
       body: Row(
         children: [
           BannerHomePage()
-        
+
         ],
       ),
     );
