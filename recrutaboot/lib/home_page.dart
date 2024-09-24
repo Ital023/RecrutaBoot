@@ -13,11 +13,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("RecrutaBoot", style: TextStyle(fontSize: 25, color: Colors.white),),
+        centerTitle: true,
+        iconTheme: const IconThemeData(
+          color: Colors.white, // Altera a cor do ícone do menu (hambúrguer)
+          size: 30, // Altera o tamanho do ícone
+        ),
+        title: const Text("RecrutaBoot",
+            style: TextStyle(fontSize: 25, color: Colors.white)),
         backgroundColor: Colors.green,
       ),
-      drawer: CustomDrawerHeader(),
-      body: Container(
+      drawer: const CustomDrawerHeader(),
+      body: const Center(
         child: Text("Teste"),
       ),
     );
