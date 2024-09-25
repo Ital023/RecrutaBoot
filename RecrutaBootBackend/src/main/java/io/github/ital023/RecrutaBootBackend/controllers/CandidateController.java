@@ -22,7 +22,7 @@ public class CandidateController {
         List<CandidateDTO> candidateDTOS = service.getAll();
         return ResponseEntity.ok(candidateDTOS);
     }
-
+    
     @PostMapping
     public ResponseEntity<CandidateDTO> save(@RequestBody CandidateDTO candidateDTO) {
         candidateDTO = service.save(candidateDTO);
