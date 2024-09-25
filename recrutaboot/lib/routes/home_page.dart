@@ -43,8 +43,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   UsersRecentCard(),
                   UsersRecentCard(),
-                  
-
+                  UsersRecentCard(),
                 ],
               ),
             ),
