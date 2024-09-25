@@ -28,13 +28,19 @@ public class CandidateService {
     }
 
     public CandidateDTO save(CandidateDTO candidateDTO){
+        GithubProfileDTO response = null;
 
-        GithubProfileDTO response = searchGithubProfile(candidateDTO.getGithubUsername());
+        if(!candidateDTO.getGithubUsername().isEmpty()){
+            response = searchGithubProfile(candidateDTO.getGithubUsername());
+        }
+
         Candidate candidate = new Candidate();
 
         copyDtoToEntity(candidateDTO, candidate, response);
 
-        candidate.getGithubProfile().setCandidate(candidate);
+        if(response != null) {
+            candidate.getGithubProfile().setCandidate(candidate);
+        }
 
         candidate = repository.save(candidate);
 
@@ -56,7 +62,9 @@ public class CandidateService {
         candidate.setName(candidateDTO.getName());
         candidate.setDescription(candidateDTO.getDescription());
         candidate.setGithubUsername(candidateDTO.getGithubUsername());
-        candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
+        if(response != null) {
+            candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
+        }
     }
 
 }

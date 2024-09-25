@@ -26,7 +26,9 @@ public class CandidateDTO {
         this.id = entity.getId();
         this.name = entity.getName();
         this.description = entity.getDescription();
-        this.githubProfile = new GithubProfileDTO(entity.getGithubProfile().getAvatarUrl(), entity.getGithubProfile().getHtmlUrl());
+        if(entity.getGithubProfile() != null) {
+            this.githubProfile = new GithubProfileDTO(entity.getGithubProfile().getAvatarUrl(), entity.getGithubProfile().getHtmlUrl());
+        }
         this.githubUsername = entity.getGithubUsername();
     }
 
