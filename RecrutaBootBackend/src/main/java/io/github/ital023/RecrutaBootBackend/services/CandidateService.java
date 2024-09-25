@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -67,6 +68,7 @@ public class CandidateService {
         candidate.setName(candidateDTO.getName());
         candidate.setDescription(candidateDTO.getDescription());
         candidate.setGithubUsername(candidateDTO.getGithubUsername());
+        candidate.setCreatedAt(Instant.now());
         if(response != null) {
             candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
         }

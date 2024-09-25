@@ -3,6 +3,8 @@ package io.github.ital023.RecrutaBootBackend.dto;
 
 import io.github.ital023.RecrutaBootBackend.entities.Candidate;
 
+import java.time.Instant;
+
 public class CandidateDTO {
     private Long id;
 
@@ -10,16 +12,18 @@ public class CandidateDTO {
     private String description;
     private String githubUsername;
     private GithubProfileDTO githubProfile;
+    private Instant createdAt;
 
     public CandidateDTO() {
     }
 
-    public CandidateDTO(Long id, String name, String description, String githubUsername, GithubProfileDTO githubProfile) {
+    public CandidateDTO(Long id, String name, String description, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.githubUsername = githubUsername;
         this.githubProfile = githubProfile;
+        this.createdAt = createdAt;
     }
 
     public CandidateDTO(Candidate entity) {
@@ -30,6 +34,7 @@ public class CandidateDTO {
             this.githubProfile = new GithubProfileDTO(entity.getGithubProfile().getAvatarUrl(), entity.getGithubProfile().getHtmlUrl());
         }
         this.githubUsername = entity.getGithubUsername();
+        this.createdAt = entity.getCreatedAt();
     }
 
     public Long getId() {
@@ -50,5 +55,9 @@ public class CandidateDTO {
 
     public GithubProfileDTO getGithubProfile() {
         return githubProfile;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 }

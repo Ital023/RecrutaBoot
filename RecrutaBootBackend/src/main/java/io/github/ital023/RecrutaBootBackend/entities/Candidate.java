@@ -2,6 +2,8 @@ package io.github.ital023.RecrutaBootBackend.entities;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "tb_candidate")
 public class Candidate {
@@ -17,16 +19,19 @@ public class Candidate {
     @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL)
     private GithubProfile githubProfile;
 
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
 
     public Candidate() {
     }
 
-    public Candidate(Long id, String name, String description, String githubUsername, GithubProfile githubProfile) {
+    public Candidate(Long id, String name, String description, String githubUsername, GithubProfile githubProfile, Instant createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.githubUsername = githubUsername;
         this.githubProfile = githubProfile;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -67,5 +72,13 @@ public class Candidate {
 
     public void setGithubProfile(GithubProfile githubProfile) {
         this.githubProfile = githubProfile;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 }
