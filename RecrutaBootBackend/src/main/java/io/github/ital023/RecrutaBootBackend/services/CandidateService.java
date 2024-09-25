@@ -1,8 +1,9 @@
 package io.github.ital023.RecrutaBootBackend.services;
 
 import io.github.ital023.RecrutaBootBackend.dto.CandidateDTO;
-import io.github.ital023.RecrutaBootBackend.dto.GithubUserDTO;
+import io.github.ital023.RecrutaBootBackend.dto.GithubProfileDTO;
 import io.github.ital023.RecrutaBootBackend.entities.Candidate;
+import io.github.ital023.RecrutaBootBackend.entities.GithubProfile;
 import io.github.ital023.RecrutaBootBackend.repositories.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,15 +27,36 @@ public class CandidateService {
         return candidates.stream().map(x -> new CandidateDTO(x)).toList();
     }
 
-    private GithubUserDTO searchGithubProfile(String githubUsername) {
+    public CandidateDTO save(CandidateDTO candidateDTO){
+
+        GithubProfileDTO response = searchGithubProfile(candidateDTO.getGithubUsername());
+        Candidate candidate = new Candidate();
+
+        copyDtoToEntity(candidateDTO, candidate, response);
+
+        candidate.getGithubProfile().setCandidate(candidate);
+
+        candidate = repository.save(candidate);
+
+        return new CandidateDTO(candidate);
+    }
+
+    private GithubProfileDTO searchGithubProfile(String githubUsername) {
         String apiUrl = "https://api.github.com/users/" + githubUsername;
 
-        ResponseEntity<GithubUserDTO> response = restTemplate.getForEntity(apiUrl, GithubUserDTO.class);
+        ResponseEntity<GithubProfileDTO> response = restTemplate.getForEntity(apiUrl, GithubProfileDTO.class);
 
         if(response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();
         }
         throw new RuntimeException("Erro ao buscar o usuário do GitHub");
+    }
+
+    private void copyDtoToEntity(CandidateDTO candidateDTO, Candidate candidate, GithubProfileDTO response) {
+        candidate.setName(candidateDTO.getName());
+        candidate.setDescription(candidateDTO.getDescription());
+        candidate.setGithubUsername(candidateDTO.getGithubUsername());
+        candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
     }
 
 }

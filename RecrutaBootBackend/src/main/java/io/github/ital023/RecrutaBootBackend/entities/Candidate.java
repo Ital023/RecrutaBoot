@@ -21,11 +21,12 @@ public class Candidate {
     public Candidate() {
     }
 
-    public Candidate(Long id, String name, String description, String avatarUrl) {
+    public Candidate(Long id, String name, String description, String githubUsername, GithubProfile githubProfile) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.avatarUrl = avatarUrl;
+        this.githubUsername = githubUsername;
+        this.githubProfile = githubProfile;
     }
 
     public Long getId() {
@@ -52,11 +53,19 @@ public class Candidate {
         this.description = description;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public String getGithubUsername() {
+        return githubUsername;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setGithubUsername(String githubUsername) {
+        this.githubUsername = githubUsername;
+    }
+
+    public GithubProfile getGithubProfile() {
+        return githubProfile;
+    }
+
+    public void setGithubProfile(GithubProfile githubProfile) {
+        this.githubProfile = githubProfile;
     }
 }

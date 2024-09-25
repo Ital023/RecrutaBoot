@@ -1,2 +1,0 @@
-INSERT INTO tb_candidate(id, name, description, avatar_url) VALUES (1, 'Italo','Desenvolvedor','https://avatars.githubusercontent.com/u/113559117?v=4')
-INSERT INTO tb_candidate(id, name, description, avatar_url) VALUES (2, 'Carlos','Gestor de Trafego','https://avatars.githubusercontent.com/u/143346006?v=4')
