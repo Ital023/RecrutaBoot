@@ -3,6 +3,8 @@ package io.github.ital023.RecrutaBootBackend.controllers;
 import io.github.ital023.RecrutaBootBackend.dto.CandidateDTO;
 import io.github.ital023.RecrutaBootBackend.services.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,8 +20,9 @@ public class CandidateController {
     private CandidateService service;
 
     @GetMapping
-    public ResponseEntity<List<CandidateDTO>> getAll() {
-        List<CandidateDTO> candidateDTOS = service.getAll();
+    public ResponseEntity<Page<CandidateDTO>> getAll(@RequestParam(name = "name", defaultValue = "") String name,
+                                                     Pageable pageable ){
+        Page<CandidateDTO> candidateDTOS = service.getAll(name, pageable);
         return ResponseEntity.ok(candidateDTOS);
     }
     
