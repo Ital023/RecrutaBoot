@@ -9,24 +9,24 @@ public class CandidateDTO {
     private String name;
     private String description;
     private String githubUsername;
-    private GithubProfileDTO githubProfileDTO;
+    private GithubProfileDTO githubProfile;
 
     public CandidateDTO() {
     }
 
-    public CandidateDTO(Long id, String name, String description, String githubUsername, GithubProfileDTO githubProfileDTO) {
+    public CandidateDTO(Long id, String name, String description, String githubUsername, GithubProfileDTO githubProfile) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.githubUsername = githubUsername;
-        this.githubProfileDTO = githubProfileDTO;
+        this.githubProfile = githubProfile;
     }
 
     public CandidateDTO(Candidate entity) {
         this.id = entity.getId();
         this.name = entity.getName();
         this.description = entity.getDescription();
-        this.githubProfileDTO = new GithubProfileDTO(entity.getGithubProfile().getAvatarUrl(), entity.getGithubProfile().getHtmlUrl());
+        this.githubProfile = new GithubProfileDTO(entity.getGithubProfile().getAvatarUrl(), entity.getGithubProfile().getHtmlUrl());
         this.githubUsername = entity.getGithubUsername();
     }
 
@@ -46,7 +46,7 @@ public class CandidateDTO {
         return githubUsername;
     }
 
-    public GithubProfileDTO getGithubProfileDTO() {
-        return githubProfileDTO;
+    public GithubProfileDTO getGithubProfile() {
+        return githubProfile;
     }
 }
