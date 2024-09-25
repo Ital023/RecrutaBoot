@@ -45,7 +45,9 @@ class CustomDrawerHeader extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.business),
             title: Text("Meus candidatos"),
-            onTap: () => null,
+            onTap: () {
+              Navigator.of(context).pushNamed("/viewCandidates");
+            },
           ),
           ListTile(
             leading: Icon(Icons.group_add),

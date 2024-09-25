@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recrutaboot/routes/candidates/candidates_page.dart';
 import 'package:recrutaboot/routes/home/home_page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -12,7 +13,12 @@ class AppWidget extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 31, 97, 151)),
         useMaterial3: true,
       ),
-      home: HomePage(key: UniqueKey())
+      initialRoute: "/",
+      routes: {
+        "/": (context) => HomePage(key: UniqueKey()),
+        "/viewCandidates": (context) => CandidatesPage(key: UniqueKey())
+      },
+      
     );
   }
 }
