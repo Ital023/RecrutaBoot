@@ -12,7 +12,7 @@ class AppWidget extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 31, 97, 151)),
         useMaterial3: true,
       ),
-      home: HomePage()
+      home: HomePage(key: UniqueKey())
     );
   }
 }

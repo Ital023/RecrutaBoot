@@ -22,7 +22,6 @@ class CandidateStore {
     isLoading.value = true;
 
     try {
-
       final result = await repository.getCandidatesSortedByDate();
       state.value = result;
 
@@ -32,7 +31,7 @@ class CandidateStore {
     catch(e) {
       erro.value = e.toString();
     }
-    
+
     isLoading.value = false;
 
   }

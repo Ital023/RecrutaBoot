@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:recrutaboot/data/models/candidate_model.dart';
 
 class UsersRecentCard extends StatefulWidget {
-  const UsersRecentCard({super.key});
+  final CandidateModel candidate;
 
+  const UsersRecentCard({super.key, required this.candidate});
   @override
   State<UsersRecentCard> createState() => _UsersRecentCardState();
 }
 
 class _UsersRecentCardState extends State<UsersRecentCard> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,8 +25,7 @@ class _UsersRecentCardState extends State<UsersRecentCard> {
               children: [
                 CircleAvatar(
                   radius: 32,
-                  backgroundImage: NetworkImage(
-                      "https://avatars.githubusercontent.com/u/113559117?v=4"),
+                  backgroundImage: NetworkImage(widget.candidate.githubProfile.avatarUrl),
                 ),
                 SizedBox(
                   width: 12,
@@ -32,11 +34,11 @@ class _UsersRecentCardState extends State<UsersRecentCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Italo Miranda",
+                      widget.candidate.name,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    Text("Desenvolvedor Mobile")
+                    Text(widget.candidate.description, style: TextStyle(fontSize: 15),)
                   ],
                 ),
               ],

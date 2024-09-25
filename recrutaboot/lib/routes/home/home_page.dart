@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:recrutaboot/components/header/custom_drawer_header.dart';
 import 'package:recrutaboot/components/homePage/banner_home_page.dart';
 import 'package:recrutaboot/components/homePage/users_recent_card.dart';
+import 'package:recrutaboot/data/http/http_client.dart';
+import 'package:recrutaboot/data/repositories/candidate_repository.dart';
+import 'package:recrutaboot/routes/home/stores/candidate_store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +14,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final CandidateStore store =
+      CandidateStore(repository: CandidateRepository(client: HttpClient()));
+
+  @override
+  void initState() {
+    print("Passei no init state");
+    super.initState();
+    store.getCandidates();    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +54,39 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 12,
                   ),
-                  UsersRecentCard(),
-                  UsersRecentCard(),
-                  UsersRecentCard(),
+                  AnimatedBuilder(
+                      animation: Listenable.merge([
+                        store.isLoading,
+                        store.state,
+                        store.erro,
+                      ]),
+                      builder: (context, children) {
+                        if (store.isLoading.value) {
+                          return const CircularProgressIndicator();
+                        }
+
+                        if (store.state.value.isEmpty) {
+                          return const Center(
+                            child: Text(
+                              'Nenhum item na lista',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        } else {
+                          final items = store.state.value.toList();
+                          return Column(
+                            children: [
+                              for (var item in items) UsersRecentCard(candidate: item,),
+                            ],
+                          );
+
+                        }
+                      }),
                 ],
               ),
             ),

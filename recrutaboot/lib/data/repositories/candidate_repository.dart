@@ -16,7 +16,10 @@ class CandidateRepository implements ICandidateRepository{
 
   @override
   Future<List<CandidateModel>> getCandidatesSortedByDate() async{
-    final response = await client.get(url: "http://localhost:8080/candidate?size=3&page=0&sort=createdAt,desc&name=");
+
+    final response = await client.get(
+      url: "http://10.0.2.2:8080/candidate?size=3&page=0&sort=createdAt,desc&name="
+      );
   
     if(response.statusCode == 200) {
       final List<CandidateModel> candidates = [];
@@ -27,7 +30,6 @@ class CandidateRepository implements ICandidateRepository{
         final CandidateModel candidate = CandidateModel.fromMap(item);
         candidates.add(candidate);
       }).toList();
-
       return candidates;
 
     }else if(response.statusCode == 404) {
