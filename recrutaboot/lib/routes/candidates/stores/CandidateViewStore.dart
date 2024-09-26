@@ -3,7 +3,7 @@ import 'package:recrutaboot/data/http/exceptions.dart';
 import 'package:recrutaboot/data/models/candidate_model.dart';
 import 'package:recrutaboot/data/repositories/candidate_repository.dart';
 
-class CandidateStore {
+class Candidateviewstore {
   final ICandidateRepository repository;
   
   //loading
@@ -15,13 +15,13 @@ class CandidateStore {
   //erro
   final ValueNotifier<String> erro = ValueNotifier<String>('');
 
-  CandidateStore({required this.repository});
+  Candidateviewstore({required this.repository});
 
   Future getCandidates() async {
     isLoading.value = true;
 
     try {
-      final result = await repository.getCandidatesSortedByDate();
+      final result = await repository.getCandidates();
       state.value = result;
 
     } on NotFoundException catch (e) {
@@ -34,5 +34,4 @@ class CandidateStore {
     isLoading.value = false;
 
   }
-
 }

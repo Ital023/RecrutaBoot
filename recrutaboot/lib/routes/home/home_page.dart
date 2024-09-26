@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                         if (store.state.value.isEmpty) {
                           return const Center(
                             child: Text(
-                              'Nenhum item na lista',
+                              'Nenhum candidato registrado',
                               style: TextStyle(
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w600,

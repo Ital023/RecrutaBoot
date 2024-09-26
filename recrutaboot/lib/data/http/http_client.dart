@@ -11,8 +11,6 @@ class HttpClient implements IHttpClient {
   Future<http.Response> get({required String url}) async {
     try {
       final response = await client.get(Uri.parse(url));
-
-      print("Status da resposta: ${response.statusCode}");
       
       if (response.statusCode != 200) {
         throw Exception('Falha ao carregar dados: ${response.statusCode}');
