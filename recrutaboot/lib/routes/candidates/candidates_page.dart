@@ -13,14 +13,13 @@ class CandidatesPage extends StatefulWidget {
 }
 
 class _CandidatesPageState extends State<CandidatesPage> {
-
   final Candidateviewstore store =
       Candidateviewstore(repository: CandidateRepository(client: HttpClient()));
 
   @override
   void initState() {
     super.initState();
-    store.getCandidates();    
+    store.getCandidates();
   }
 
   @override
@@ -39,47 +38,50 @@ class _CandidatesPageState extends State<CandidatesPage> {
                     SizedBox(
                       height: 14,
                     ),
-                    Text("Meus candidatos",
-                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                     SizedBox(
+                    Text(
+                      "Meus candidatos",
+                      style:
+                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
                       height: 24,
                     ),
                     AnimatedBuilder(
-                      animation: Listenable.merge([
-                        store.isLoading,
-                        store.state,
-                        store.erro,
-                      ]),
-                      builder: (context, children) {
-                        if (store.isLoading.value) {
-                          return const CircularProgressIndicator();
-                        }
+                        animation: Listenable.merge([
+                          store.isLoading,
+                          store.state,
+                          store.erro,
+                        ]),
+                        builder: (context, children) {
+                          if (store.isLoading.value) {
+                            return const CircularProgressIndicator();
+                          }
 
-                        if (store.state.value.isEmpty) {
-                          return const Center(
-                            child: Text(
-                              'Nenhum candidato registrado',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20,
+                          if (store.state.value.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                'Nenhum candidato registrado',
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                          );
-                        } else {
-                          final items = store.state.value.toList();
-                          return Column(
-                            children: [
-                              for (var item in items) UsersRecentCard(candidate: item,),
-                            ],
-                          );
-
-                        }
-                      }),
-                    
-
-                     
+                            );
+                          } else {
+                            final items = store.state.value.toList();
+                            return Expanded(
+                              child: ListView.builder(
+                                itemCount: items.length,
+                                itemBuilder: (context, index) {
+                                  return UsersRecentCard(
+                                      candidate: items[index]);
+                                },
+                              ),
+                            );
+                          }
+                        }),
                   ],
                 ),
               ),
