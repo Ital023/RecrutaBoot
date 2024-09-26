@@ -5,6 +5,7 @@ import io.github.ital023.RecrutaBootBackend.dto.GithubProfileDTO;
 import io.github.ital023.RecrutaBootBackend.entities.Candidate;
 import io.github.ital023.RecrutaBootBackend.entities.GithubProfile;
 import io.github.ital023.RecrutaBootBackend.repositories.CandidateRepository;
+import io.github.ital023.RecrutaBootBackend.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,14 @@ public class CandidateService {
     public Page<CandidateDTO> getAll(String name, Pageable pageable) {
         Page<Candidate> candidates = repository.searchByName(name, pageable);
         return candidates.map(x -> new CandidateDTO(x));
+    }
+
+    @Transactional(readOnly = true)
+    public CandidateDTO getById(Long id) {
+        Candidate candidate = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado"));
+
+        return new CandidateDTO(candidate);
     }
 
     @Transactional

@@ -12,5 +12,4 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
             "WHERE UPPER(obj.name) LIKE UPPER(CONCAT('%', :name ,'%'))")
     Page<Candidate> searchByName(String name, Pageable pageable);
 
-
 }

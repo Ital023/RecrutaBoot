@@ -31,6 +31,12 @@ public class CandidateController {
         Page<CandidateDTO> candidateDTOS = service.getAll(name, pageable);
         return ResponseEntity.ok(candidateDTOS);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CandidateDTO> getById(@PathVariable Long id) {
+        CandidateDTO candidateDTO = service.getById(id);
+        return ResponseEntity.ok(candidateDTO);
+    }
     
     @PostMapping
     public ResponseEntity<CandidateDTO> save(@RequestBody CandidateDTO candidateDTO) {
