@@ -20,7 +20,13 @@ public class CandidateController {
     private CandidateService service;
 
     @GetMapping
-    public ResponseEntity<Page<CandidateDTO>> getAll(@RequestParam(name = "name", defaultValue = "") String name,
+    public ResponseEntity<List<CandidateDTO>> findAll(){
+        List<CandidateDTO> candidateDTOS = service.findAll();
+        return ResponseEntity.ok(candidateDTOS);
+    }
+
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<CandidateDTO>> getAllPageable(@RequestParam(name = "name", defaultValue = "") String name,
                                                      Pageable pageable ){
         Page<CandidateDTO> candidateDTOS = service.getAll(name, pageable);
         return ResponseEntity.ok(candidateDTOS);

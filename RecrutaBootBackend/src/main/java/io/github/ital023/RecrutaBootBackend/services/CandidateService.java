@@ -27,6 +27,12 @@ public class CandidateService {
     private CandidateRepository repository;
 
     @Transactional(readOnly = true)
+    public List<CandidateDTO> findAll() {
+        List<Candidate> candidates = repository.findAll();
+        return candidates.stream().map(x -> new CandidateDTO(x)).toList();
+    }
+
+    @Transactional(readOnly = true)
     public Page<CandidateDTO> getAll(String name, Pageable pageable) {
         Page<Candidate> candidates = repository.searchByName(name, pageable);
         return candidates.map(x -> new CandidateDTO(x));
@@ -73,5 +79,6 @@ public class CandidateService {
             candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
         }
     }
+
 
 }
