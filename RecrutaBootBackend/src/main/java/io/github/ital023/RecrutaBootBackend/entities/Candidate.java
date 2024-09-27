@@ -1,7 +1,5 @@
 package io.github.ital023.RecrutaBootBackend.entities;
-
 import jakarta.persistence.*;
-
 import java.time.Instant;
 
 @Entity
@@ -16,10 +14,12 @@ public class Candidate {
 
     private String occupation;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 250)
     private String description;
 
     private String githubUsername;
+
+    private String linkedinUrl;
 
     @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL)
     private GithubProfile githubProfile;
@@ -30,7 +30,7 @@ public class Candidate {
     public Candidate() {
     }
 
-    public Candidate(Long id, String name, String occupation, String description, String githubUsername, GithubProfile githubProfile, Instant createdAt) {
+    public Candidate(Long id, String name, String occupation, String description, String githubUsername, GithubProfile githubProfile, Instant createdAt, String linkedinUrl) {
         this.id = id;
         this.name = name;
         this.occupation = occupation;
@@ -38,6 +38,7 @@ public class Candidate {
         this.githubUsername = githubUsername;
         this.githubProfile = githubProfile;
         this.createdAt = createdAt;
+        this.linkedinUrl = linkedinUrl;
     }
 
     public Long getId() {
@@ -94,5 +95,13 @@ public class Candidate {
 
     public void setOccupation(String occupation) {
         this.occupation = occupation;
+    }
+
+    public String getLinkedinUrl() {
+        return linkedinUrl;
+    }
+
+    public void setLinkedinUrl(String linkedinUrl) {
+        this.linkedinUrl = linkedinUrl;
     }
 }

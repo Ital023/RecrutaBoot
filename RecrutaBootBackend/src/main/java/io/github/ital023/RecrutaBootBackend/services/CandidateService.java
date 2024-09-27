@@ -99,6 +99,7 @@ public class CandidateService {
         if(response != null) {
             candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
         }
+        candidate.setLinkedinUrl(candidateDTO.getLinkedinUrl());
     }
 
 

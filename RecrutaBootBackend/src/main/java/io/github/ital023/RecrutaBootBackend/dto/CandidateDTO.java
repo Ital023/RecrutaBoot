@@ -14,6 +14,8 @@ public class CandidateDTO {
     private String githubUsername;
     private GithubProfileDTO githubProfile;
     private Instant createdAt;
+    private String linkedinUrl;
+
 
 
     public CandidateDTO(Candidate entity) {
@@ -26,12 +28,13 @@ public class CandidateDTO {
         this.githubUsername = entity.getGithubUsername();
         this.createdAt = entity.getCreatedAt();
         this.occupation = entity.getOccupation();
+        this.linkedinUrl = entity.getLinkedinUrl();
     }
 
     public CandidateDTO() {
     }
 
-    public CandidateDTO(Long id, String name, String occupation, String description, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt) {
+    public CandidateDTO(Long id, String name, String occupation, String description, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt, String linkedinUrl) {
         this.id = id;
         this.name = name;
         this.occupation = occupation;
@@ -39,6 +42,7 @@ public class CandidateDTO {
         this.githubUsername = githubUsername;
         this.githubProfile = githubProfile;
         this.createdAt = createdAt;
+        this.linkedinUrl = linkedinUrl;
     }
 
     public Long getId() {
@@ -67,5 +71,9 @@ public class CandidateDTO {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public String getLinkedinUrl() {
+        return linkedinUrl;
     }
 }
