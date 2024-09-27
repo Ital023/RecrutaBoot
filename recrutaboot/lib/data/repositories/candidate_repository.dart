@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:recrutaboot/data/http/exceptions.dart';
 import 'package:recrutaboot/data/http/http_client.dart';
+import 'package:recrutaboot/data/models/candidate_min_model.dart';
 import 'package:recrutaboot/data/models/candidate_model.dart';
 
 abstract class ICandidateRepository {
-  Future<List<CandidateModel>> getCandidatesSortedByDate();
-  Future<List<CandidateModel>> getCandidates();
+  Future<List<CandidateMinModel>> getCandidatesSortedByDate();
+  Future<List<CandidateMinModel>> getCandidates();
   Future<CandidateModel> getCandidateById(int id);
 
 }
@@ -17,15 +18,15 @@ class CandidateRepository implements ICandidateRepository {
   CandidateRepository({required this.client});
 
   @override
-  Future<List<CandidateModel>> getCandidates() async {
+  Future<List<CandidateMinModel>> getCandidates() async {
     final response = await client.get(url: "http://10.0.2.2:8080/candidate");
 
     if (response.statusCode == 200) {
-      final List<CandidateModel> candidates = [];
+      final List<CandidateMinModel> candidates = [];
       final body = jsonDecode(response.body);
 
       body.map((item) {
-        final CandidateModel candidate = CandidateModel.fromMap(item);
+        final CandidateMinModel candidate = CandidateMinModel.fromMap(item);
         candidates.add(candidate);
       }).toList();
       return candidates;
@@ -37,18 +38,18 @@ class CandidateRepository implements ICandidateRepository {
   }
 
   @override
-  Future<List<CandidateModel>> getCandidatesSortedByDate() async {
+  Future<List<CandidateMinModel>> getCandidatesSortedByDate() async {
     final response = await client.get(
         url:
             "http://10.0.2.2:8080/candidate/pageable?size=3&page=0&sort=createdAt,desc&name=");
 
     if (response.statusCode == 200) {
-      final List<CandidateModel> candidates = [];
+      final List<CandidateMinModel> candidates = [];
 
       final body = jsonDecode(response.body);
 
       body['content'].map((item) {
-        final CandidateModel candidate = CandidateModel.fromMap(item);
+        final CandidateMinModel candidate = CandidateMinModel.fromMap(item);
         candidates.add(candidate);
       }).toList();
       return candidates;

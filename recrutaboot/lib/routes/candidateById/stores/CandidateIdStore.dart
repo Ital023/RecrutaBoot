@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recrutaboot/data/http/exceptions.dart';
+import 'package:recrutaboot/data/models/candidate_min_model.dart';
 import 'package:recrutaboot/data/models/candidate_model.dart';
 import 'package:recrutaboot/data/repositories/candidate_repository.dart';
 
@@ -21,11 +22,8 @@ class Candidateidstore {
     isLoading.value = true;
 
     try {
-      print("Antes da persistencia: ${state.value}");
-
       final result = await repository.getCandidateById(id);
       state.value = result;
-      print("Depois da persistencia: ${state.value}");
 
     } on NotFoundException catch (e) {
       erro.value = e.message;

@@ -6,7 +6,9 @@ import 'package:recrutaboot/data/repositories/candidate_repository.dart';
 import 'package:recrutaboot/routes/candidateById/stores/CandidateIdStore.dart';
 
 class CandidateIdPage extends StatefulWidget {
-  const CandidateIdPage({super.key});
+  final int candidateId;  
+
+  const CandidateIdPage({super.key, required this.candidateId});
 
   @override
   State<CandidateIdPage> createState() => _CandidateIdPageState();
@@ -19,7 +21,7 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
   @override
   void initState() {
     super.initState();
-    store.getCandidateById(2);
+    store.getCandidateById(widget.candidateId);
   }
 
   @override
@@ -81,7 +83,16 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
+                                  "${item.occupation}",
+                                  style: TextStyle(
+                                      fontSize: 20),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
                                   "${item.description}",
+                                  textAlign: TextAlign.justify,
                                   style: TextStyle(
                                       fontSize: 18,),
                                 ),

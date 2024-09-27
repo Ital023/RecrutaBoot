@@ -17,7 +17,10 @@ class AppWidget extends StatelessWidget {
     ),
     GoRoute(
       path: '/candidate/:candidateId',
-      builder: (context, state) => const CandidateIdPage(),
+      builder: (context, state) {
+        final candidateId = state.pathParameters['candidateId']!;
+        return CandidateIdPage(candidateId: int.parse(candidateId));
+      },
     ),
     ],
   );

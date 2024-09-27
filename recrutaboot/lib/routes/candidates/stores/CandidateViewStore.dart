@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recrutaboot/data/http/exceptions.dart';
-import 'package:recrutaboot/data/models/candidate_model.dart';
+import 'package:recrutaboot/data/models/candidate_min_model.dart';
 import 'package:recrutaboot/data/repositories/candidate_repository.dart';
 
 class Candidateviewstore {
@@ -10,7 +10,7 @@ class Candidateviewstore {
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
 
   //state
-  final ValueNotifier<List<CandidateModel>> state = ValueNotifier<List<CandidateModel>>([]); 
+  final ValueNotifier<List<CandidateMinModel>> state = ValueNotifier<List<CandidateMinModel>>([]); 
 
   //erro
   final ValueNotifier<String> erro = ValueNotifier<String>('');
