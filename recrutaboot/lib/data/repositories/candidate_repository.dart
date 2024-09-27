@@ -7,6 +7,8 @@ import 'package:recrutaboot/data/models/candidate_model.dart';
 abstract class ICandidateRepository {
   Future<List<CandidateModel>> getCandidatesSortedByDate();
   Future<List<CandidateModel>> getCandidates();
+  Future<CandidateModel> getCandidateById(int id);
+
 }
 
 class CandidateRepository implements ICandidateRepository {
@@ -56,4 +58,23 @@ class CandidateRepository implements ICandidateRepository {
       throw new Exception("Loading failed");
     }
   }
+  
+  @override
+  Future<CandidateModel> getCandidateById(int id) async {
+    final response = await client.get(url: "http://10.0.2.2:8080/candidate/${id}");
+
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      final CandidateModel candidate = CandidateModel.fromMap(body);
+        
+      return candidate;
+    } else if (response.statusCode == 404) {
+      throw NotFoundException("A URL não está válida");
+    } else {
+      throw new Exception("Loading failed");
+    }
+    
+  }
+
+  
 }
