@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recrutaboot/components/header/app_bar_custom.dart';
+import 'package:recrutaboot/components/header/drawer/custom_drawer_header.dart';
 import 'package:recrutaboot/components/homePage/users_recent_card.dart';
 import 'package:recrutaboot/data/http/http_client.dart';
 import 'package:recrutaboot/data/repositories/candidate_repository.dart';
@@ -26,6 +27,8 @@ class _CandidatesPageState extends State<CandidatesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarCustom(),
+      drawer: const CustomDrawerHeader(),
+
       body: Column(
         children: [
           Expanded(

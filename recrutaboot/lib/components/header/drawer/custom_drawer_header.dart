@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomDrawerHeader extends StatelessWidget {
   const CustomDrawerHeader({super.key});
@@ -40,13 +41,15 @@ class CustomDrawerHeader extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.home),
             title: Text("Home"),
-            onTap: () => null,
+            onTap: () {
+              context.go("/");
+            },
           ),
           ListTile(
             leading: Icon(Icons.business),
             title: Text("Meus candidatos"),
             onTap: () {
-              Navigator.of(context).pushNamed("/viewCandidates");
+              context.go("/viewCandidates");
             },
           ),
           ListTile(
