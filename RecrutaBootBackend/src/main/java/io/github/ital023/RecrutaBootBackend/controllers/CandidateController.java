@@ -1,5 +1,6 @@
 package io.github.ital023.RecrutaBootBackend.controllers;
 
+import io.github.ital023.RecrutaBootBackend.dto.CandidateDTO;
 import io.github.ital023.RecrutaBootBackend.dto.CandidateMinDTO;
 import io.github.ital023.RecrutaBootBackend.services.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,19 +34,19 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CandidateMinDTO> getById(@PathVariable Long id) {
-        CandidateMinDTO candidateMinDTO = service.getById(id);
-        return ResponseEntity.ok(candidateMinDTO);
+    public ResponseEntity<CandidateDTO> getById(@PathVariable Long id) {
+        CandidateDTO candidateDTO = service.getById(id);
+        return ResponseEntity.ok(candidateDTO);
     }
     
     @PostMapping
-    public ResponseEntity<CandidateMinDTO> save(@RequestBody CandidateMinDTO candidateMinDTO) {
-        candidateMinDTO = service.save(candidateMinDTO);
+    public ResponseEntity<CandidateDTO> save(@RequestBody CandidateDTO candidateDTO) {
+        candidateDTO = service.save(candidateDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(candidateMinDTO.getId())
+                .buildAndExpand(candidateDTO.getId())
                 .toUri();
-        return ResponseEntity.created(uri).body(candidateMinDTO);
+        return ResponseEntity.created(uri).body(candidateDTO);
     }
 
 }

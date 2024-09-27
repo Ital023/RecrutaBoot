@@ -1,5 +1,6 @@
 package io.github.ital023.RecrutaBootBackend.services;
 
+import io.github.ital023.RecrutaBootBackend.dto.CandidateDTO;
 import io.github.ital023.RecrutaBootBackend.dto.CandidateMinDTO;
 import io.github.ital023.RecrutaBootBackend.dto.GithubProfileDTO;
 import io.github.ital023.RecrutaBootBackend.entities.Candidate;
@@ -40,24 +41,24 @@ public class CandidateService {
     }
 
     @Transactional(readOnly = true)
-    public CandidateMinDTO getById(Long id) {
+    public CandidateDTO getById(Long id) {
         Candidate candidate = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado"));
 
-        return new CandidateMinDTO(candidate);
+        return new CandidateDTO(candidate);
     }
 
     @Transactional
-    public CandidateMinDTO save(CandidateMinDTO candidateMinDTO){
+    public CandidateDTO save(CandidateDTO candidateDTO){
         GithubProfileDTO response = null;
 
-        if(!candidateMinDTO.getGithubUsername().isEmpty()){
-            response = searchGithubProfile(candidateMinDTO.getGithubUsername());
+        if(!candidateDTO.getGithubUsername().isEmpty()){
+            response = searchGithubProfile(candidateDTO.getGithubUsername());
         }
 
         Candidate candidate = new Candidate();
 
-        copyDtoToEntity(candidateMinDTO, candidate, response);
+        copyDtoToEntity(candidateDTO, candidate, response);
 
         if(response != null) {
             candidate.getGithubProfile().setCandidate(candidate);
@@ -65,7 +66,7 @@ public class CandidateService {
 
         candidate = repository.save(candidate);
 
-        return new CandidateMinDTO(candidate);
+        return new CandidateDTO(candidate);
     }
 
     private GithubProfileDTO searchGithubProfile(String githubUsername) {
@@ -79,10 +80,21 @@ public class CandidateService {
         throw new RuntimeException("Erro ao buscar o usuário do GitHub");
     }
 
-    private void copyDtoToEntity(CandidateMinDTO candidateMinDTO, Candidate candidate, GithubProfileDTO response) {
+    private void copyDtoToEntityMin(CandidateMinDTO candidateMinDTO, Candidate candidate, GithubProfileDTO response) {
         candidate.setName(candidateMinDTO.getName());
-        candidate.setDescription(candidateMinDTO.getDescription());
+        candidate.setOccupation(candidateMinDTO.getOccupation());
         candidate.setGithubUsername(candidateMinDTO.getGithubUsername());
+        candidate.setCreatedAt(Instant.now());
+        if(response != null) {
+            candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
+        }
+    }
+
+    private void copyDtoToEntity(CandidateDTO candidateDTO, Candidate candidate, GithubProfileDTO response) {
+        candidate.setName(candidateDTO.getName());
+        candidate.setOccupation(candidateDTO.getOccupation());
+        candidate.setGithubUsername(candidateDTO.getGithubUsername());
+        candidate.setDescription(candidateDTO.getDescription());
         candidate.setCreatedAt(Instant.now());
         if(response != null) {
             candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));

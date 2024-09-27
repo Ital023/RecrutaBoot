@@ -9,7 +9,7 @@ public class CandidateMinDTO {
     private Long id;
 
     private String name;
-    private String description;
+    private String occupation;
     private String githubUsername;
     private GithubProfileDTO githubProfile;
     private Instant createdAt;
@@ -17,10 +17,10 @@ public class CandidateMinDTO {
     public CandidateMinDTO() {
     }
 
-    public CandidateMinDTO(Long id, String name, String description, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt) {
+    public CandidateMinDTO(Long id, String name, String occupation, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        this.occupation = occupation;
         this.githubUsername = githubUsername;
         this.githubProfile = githubProfile;
         this.createdAt = createdAt;
@@ -29,7 +29,7 @@ public class CandidateMinDTO {
     public CandidateMinDTO(Candidate entity) {
         this.id = entity.getId();
         this.name = entity.getName();
-        this.description = entity.getDescription();
+        this.occupation = entity.getOccupation();
         if(entity.getGithubProfile() != null) {
             this.githubProfile = new GithubProfileDTO(entity.getGithubProfile().getAvatarUrl(), entity.getGithubProfile().getHtmlUrl());
         }
@@ -45,8 +45,8 @@ public class CandidateMinDTO {
         return name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getOccupation() {
+        return occupation;
     }
 
     public String getGithubUsername() {

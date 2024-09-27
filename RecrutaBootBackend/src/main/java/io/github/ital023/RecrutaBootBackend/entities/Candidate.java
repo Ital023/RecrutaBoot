@@ -13,8 +13,12 @@ public class Candidate {
     private Long id;
 
     private String name;
+
     private String occupation;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
+
     private String githubUsername;
 
     @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL)
