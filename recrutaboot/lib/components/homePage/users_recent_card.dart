@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:recrutaboot/data/models/candidate_model.dart';
 
 class UsersRecentCard extends StatefulWidget {
@@ -15,7 +16,7 @@ class _UsersRecentCardState extends State<UsersRecentCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Text("OI");
+        context.go('/candidate/${widget.candidate.id}');
       },
       child: Container(
           margin: EdgeInsets.only(bottom: 10),
