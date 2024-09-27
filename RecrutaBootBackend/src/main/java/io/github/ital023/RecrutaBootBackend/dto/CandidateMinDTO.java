@@ -5,18 +5,28 @@ import io.github.ital023.RecrutaBootBackend.entities.Candidate;
 
 import java.time.Instant;
 
-public class CandidateDTO {
+public class CandidateMinDTO {
     private Long id;
 
     private String name;
-    private String occupation;
     private String description;
     private String githubUsername;
     private GithubProfileDTO githubProfile;
     private Instant createdAt;
 
+    public CandidateMinDTO() {
+    }
 
-    public CandidateDTO(Candidate entity) {
+    public CandidateMinDTO(Long id, String name, String description, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.githubUsername = githubUsername;
+        this.githubProfile = githubProfile;
+        this.createdAt = createdAt;
+    }
+
+    public CandidateMinDTO(Candidate entity) {
         this.id = entity.getId();
         this.name = entity.getName();
         this.description = entity.getDescription();
@@ -25,20 +35,6 @@ public class CandidateDTO {
         }
         this.githubUsername = entity.getGithubUsername();
         this.createdAt = entity.getCreatedAt();
-        this.occupation = entity.getOccupation();
-    }
-
-    public CandidateDTO() {
-    }
-
-    public CandidateDTO(Long id, String name, String occupation, String description, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt) {
-        this.id = id;
-        this.name = name;
-        this.occupation = occupation;
-        this.description = description;
-        this.githubUsername = githubUsername;
-        this.githubProfile = githubProfile;
-        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -47,10 +43,6 @@ public class CandidateDTO {
 
     public String getName() {
         return name;
-    }
-
-    public String getOccupation() {
-        return occupation;
     }
 
     public String getDescription() {

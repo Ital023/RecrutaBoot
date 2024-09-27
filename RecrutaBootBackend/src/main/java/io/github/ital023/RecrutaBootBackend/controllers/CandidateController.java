@@ -1,6 +1,6 @@
 package io.github.ital023.RecrutaBootBackend.controllers;
 
-import io.github.ital023.RecrutaBootBackend.dto.CandidateDTO;
+import io.github.ital023.RecrutaBootBackend.dto.CandidateMinDTO;
 import io.github.ital023.RecrutaBootBackend.services.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,32 +20,32 @@ public class CandidateController {
     private CandidateService service;
 
     @GetMapping
-    public ResponseEntity<List<CandidateDTO>> findAll(){
-        List<CandidateDTO> candidateDTOS = service.findAll();
-        return ResponseEntity.ok(candidateDTOS);
+    public ResponseEntity<List<CandidateMinDTO>> findAll(){
+        List<CandidateMinDTO> candidateMinDTOS = service.findAll();
+        return ResponseEntity.ok(candidateMinDTOS);
     }
 
     @GetMapping("/pageable")
-    public ResponseEntity<Page<CandidateDTO>> getAllPageable(@RequestParam(name = "name", defaultValue = "") String name,
-                                                     Pageable pageable ){
-        Page<CandidateDTO> candidateDTOS = service.getAll(name, pageable);
+    public ResponseEntity<Page<CandidateMinDTO>> getAllPageable(@RequestParam(name = "name", defaultValue = "") String name,
+                                                                Pageable pageable ){
+        Page<CandidateMinDTO> candidateDTOS = service.getAll(name, pageable);
         return ResponseEntity.ok(candidateDTOS);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CandidateDTO> getById(@PathVariable Long id) {
-        CandidateDTO candidateDTO = service.getById(id);
-        return ResponseEntity.ok(candidateDTO);
+    public ResponseEntity<CandidateMinDTO> getById(@PathVariable Long id) {
+        CandidateMinDTO candidateMinDTO = service.getById(id);
+        return ResponseEntity.ok(candidateMinDTO);
     }
     
     @PostMapping
-    public ResponseEntity<CandidateDTO> save(@RequestBody CandidateDTO candidateDTO) {
-        candidateDTO = service.save(candidateDTO);
+    public ResponseEntity<CandidateMinDTO> save(@RequestBody CandidateMinDTO candidateMinDTO) {
+        candidateMinDTO = service.save(candidateMinDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(candidateDTO.getId())
+                .buildAndExpand(candidateMinDTO.getId())
                 .toUri();
-        return ResponseEntity.created(uri).body(candidateDTO);
+        return ResponseEntity.created(uri).body(candidateMinDTO);
     }
 
 }

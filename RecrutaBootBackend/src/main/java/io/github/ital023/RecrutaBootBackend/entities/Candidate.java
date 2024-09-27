@@ -13,6 +13,7 @@ public class Candidate {
     private Long id;
 
     private String name;
+    private String occupation;
     private String description;
     private String githubUsername;
 
@@ -25,9 +26,10 @@ public class Candidate {
     public Candidate() {
     }
 
-    public Candidate(Long id, String name, String description, String githubUsername, GithubProfile githubProfile, Instant createdAt) {
+    public Candidate(Long id, String name, String occupation, String description, String githubUsername, GithubProfile githubProfile, Instant createdAt) {
         this.id = id;
         this.name = name;
+        this.occupation = occupation;
         this.description = description;
         this.githubUsername = githubUsername;
         this.githubProfile = githubProfile;
@@ -80,5 +82,13 @@ public class Candidate {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
     }
 }

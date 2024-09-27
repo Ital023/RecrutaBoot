@@ -1,6 +1,6 @@
 package io.github.ital023.RecrutaBootBackend.services;
 
-import io.github.ital023.RecrutaBootBackend.dto.CandidateDTO;
+import io.github.ital023.RecrutaBootBackend.dto.CandidateMinDTO;
 import io.github.ital023.RecrutaBootBackend.dto.GithubProfileDTO;
 import io.github.ital023.RecrutaBootBackend.entities.Candidate;
 import io.github.ital023.RecrutaBootBackend.entities.GithubProfile;
@@ -28,36 +28,36 @@ public class CandidateService {
     private CandidateRepository repository;
 
     @Transactional(readOnly = true)
-    public List<CandidateDTO> findAll() {
+    public List<CandidateMinDTO> findAll() {
         List<Candidate> candidates = repository.findAll();
-        return candidates.stream().map(x -> new CandidateDTO(x)).toList();
+        return candidates.stream().map(x -> new CandidateMinDTO(x)).toList();
     }
 
     @Transactional(readOnly = true)
-    public Page<CandidateDTO> getAll(String name, Pageable pageable) {
+    public Page<CandidateMinDTO> getAll(String name, Pageable pageable) {
         Page<Candidate> candidates = repository.searchByName(name, pageable);
-        return candidates.map(x -> new CandidateDTO(x));
+        return candidates.map(x -> new CandidateMinDTO(x));
     }
 
     @Transactional(readOnly = true)
-    public CandidateDTO getById(Long id) {
+    public CandidateMinDTO getById(Long id) {
         Candidate candidate = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado"));
 
-        return new CandidateDTO(candidate);
+        return new CandidateMinDTO(candidate);
     }
 
     @Transactional
-    public CandidateDTO save(CandidateDTO candidateDTO){
+    public CandidateMinDTO save(CandidateMinDTO candidateMinDTO){
         GithubProfileDTO response = null;
 
-        if(!candidateDTO.getGithubUsername().isEmpty()){
-            response = searchGithubProfile(candidateDTO.getGithubUsername());
+        if(!candidateMinDTO.getGithubUsername().isEmpty()){
+            response = searchGithubProfile(candidateMinDTO.getGithubUsername());
         }
 
         Candidate candidate = new Candidate();
 
-        copyDtoToEntity(candidateDTO, candidate, response);
+        copyDtoToEntity(candidateMinDTO, candidate, response);
 
         if(response != null) {
             candidate.getGithubProfile().setCandidate(candidate);
@@ -65,7 +65,7 @@ public class CandidateService {
 
         candidate = repository.save(candidate);
 
-        return new CandidateDTO(candidate);
+        return new CandidateMinDTO(candidate);
     }
 
     private GithubProfileDTO searchGithubProfile(String githubUsername) {
@@ -79,10 +79,10 @@ public class CandidateService {
         throw new RuntimeException("Erro ao buscar o usuário do GitHub");
     }
 
-    private void copyDtoToEntity(CandidateDTO candidateDTO, Candidate candidate, GithubProfileDTO response) {
-        candidate.setName(candidateDTO.getName());
-        candidate.setDescription(candidateDTO.getDescription());
-        candidate.setGithubUsername(candidateDTO.getGithubUsername());
+    private void copyDtoToEntity(CandidateMinDTO candidateMinDTO, Candidate candidate, GithubProfileDTO response) {
+        candidate.setName(candidateMinDTO.getName());
+        candidate.setDescription(candidateMinDTO.getDescription());
+        candidate.setGithubUsername(candidateMinDTO.getGithubUsername());
         candidate.setCreatedAt(Instant.now());
         if(response != null) {
             candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
