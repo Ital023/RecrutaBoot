@@ -7,6 +7,7 @@ class CandidateModel {
   final String description;
   final String githubUsername;
   final GithubProfile githubProfile;
+  final String linkedinUrl;
 
   CandidateModel({
     required this.id,
@@ -15,6 +16,8 @@ class CandidateModel {
     required this.description,
     required this.githubUsername,
     required this.githubProfile,
+    required this.linkedinUrl,
+
   });
 
   factory CandidateModel.fromMap(Map<String, dynamic> map) {
@@ -25,6 +28,7 @@ class CandidateModel {
       description: map['description'],
       githubUsername: map['githubUsername'],
       githubProfile: GithubProfile.fromMap(map['githubProfile']),
+      linkedinUrl: map['linkedinUrl']
     );
   }
 }

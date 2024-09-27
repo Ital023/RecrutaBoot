@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:recrutaboot/components/header/app_bar_custom.dart';
 import 'package:recrutaboot/components/header/drawer/custom_drawer_header.dart';
 import 'package:recrutaboot/data/http/http_client.dart';
 import 'package:recrutaboot/data/repositories/candidate_repository.dart';
 import 'package:recrutaboot/routes/candidateById/stores/CandidateIdStore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CandidateIdPage extends StatefulWidget {
-  final int candidateId;  
+  final int candidateId;
 
   const CandidateIdPage({super.key, required this.candidateId});
 
@@ -84,8 +86,7 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                 ),
                                 Text(
                                   "${item.occupation}",
-                                  style: TextStyle(
-                                      fontSize: 20),
+                                  style: TextStyle(fontSize: 20),
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -94,8 +95,85 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                   "${item.description}",
                                   textAlign: TextAlign.justify,
                                   style: TextStyle(
-                                      fontSize: 18,),
+                                    fontSize: 18,
+                                  ),
                                 ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        final githubUrl =
+                                            '${item.githubProfile.htmlUrl}';
+                                        Uri githubUri = Uri.parse(githubUrl);
+
+                                        if (await canLaunchUrl(githubUri)) {
+                                          await launchUrl(githubUri);
+                                        } else {
+                                          throw 'Não foi possível abrir o link $githubUrl';
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        child: Image.asset(
+                                            "assets/images/githubLogo.png"),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        final linkedinUrl =
+                                            '${item.linkedinUrl}';
+                                        Uri linkedinUri =
+                                            Uri.parse(linkedinUrl);
+
+                                        if (await canLaunchUrl(linkedinUri)) {
+                                          await launchUrl(linkedinUri);
+                                        } else {
+                                          throw 'Não foi possível abrir o link $linkedinUrl';
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        child: Image.asset(
+                                            "assets/images/linkedinIcon.png"),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 18),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: OutlinedButton(
+                                        onPressed: () {
+                                          context.go("/");
+                                        },
+                                        style: OutlinedButton.styleFrom(
+                                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(6)), ),
+                                          side: const BorderSide(color: Color.fromARGB(255, 31, 97, 151), width: 2)
+                                        ),
+                                        child: Text("Voltar para home"),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: FilledButton(style: FilledButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(6)
+                                        )
+                                      ),onPressed: () {
+                                      
+                                      }, child: Text("Adicionar favoritos")
+                                      ),
+                                    )
+                                  ],
+                                )
                               ],
                             ),
                           ]);
