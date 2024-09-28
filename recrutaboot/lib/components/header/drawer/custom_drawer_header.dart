@@ -62,7 +62,9 @@ class CustomDrawerHeader extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.group_add),
             title: Text("Registrar candidato"),
-            onTap: () => null,
+            onTap: () {
+              context.go("/registerCandidate");
+            },
           ),
           Divider(),
           ListTile(
