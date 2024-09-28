@@ -124,4 +124,9 @@ public class CandidateService {
     }
 
 
+    public List<CandidateMinDTO> getAllFavorites() {
+        List<Candidate> candidates = repository.searchFavorites();
+
+        return candidates.stream().map(x -> new CandidateMinDTO(x)).toList();
+    }
 }

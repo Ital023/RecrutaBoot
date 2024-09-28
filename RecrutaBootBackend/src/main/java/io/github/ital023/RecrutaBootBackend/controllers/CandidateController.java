@@ -27,6 +27,13 @@ public class CandidateController {
         return ResponseEntity.ok(candidateMinDTOS);
     }
 
+    @GetMapping("/favorite")
+    public ResponseEntity<List<CandidateMinDTO>> getAllFavorites(){
+        List<CandidateMinDTO> favorites = service.getAllFavorites();
+
+        return ResponseEntity.ok(favorites);
+    }
+
     @GetMapping("/pageable")
     public ResponseEntity<Page<CandidateMinDTO>> getAllPageable(@RequestParam(name = "name", defaultValue = "") String name,
                                                                 Pageable pageable ){
