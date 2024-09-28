@@ -53,6 +53,13 @@ class CustomDrawerHeader extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: Icon(Icons.star),
+            title: Text("Meus favoritos"),
+            onTap: () {
+              context.go("/viewCandidates");
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.group_add),
             title: Text("Registrar candidato"),
             onTap: () => null,
