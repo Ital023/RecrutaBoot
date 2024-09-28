@@ -103,6 +103,7 @@ public class CandidateService {
         candidate.setName(candidateMinDTO.getName());
         candidate.setOccupation(candidateMinDTO.getOccupation());
         candidate.setGithubUsername(candidateMinDTO.getGithubUsername());
+        candidate.setFavorite(candidateMinDTO.isFavorite());
         candidate.setCreatedAt(Instant.now());
         candidate.setUpdatedAt(Instant.now());
         if(response != null) {

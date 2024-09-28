@@ -12,6 +12,7 @@ public class CandidateMinDTO {
     private String occupation;
     private String githubUsername;
     private GithubProfileDTO githubProfile;
+    private boolean favorite;
     private Instant createdAt;
     private Instant updatedAt;
 
@@ -19,12 +20,13 @@ public class CandidateMinDTO {
     public CandidateMinDTO() {
     }
 
-    public CandidateMinDTO(Long id, String name, String occupation, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt, Instant updatedAt) {
+    public CandidateMinDTO(Long id, String name, String occupation, String githubUsername, GithubProfileDTO githubProfile, boolean favorite, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.occupation = occupation;
         this.githubUsername = githubUsername;
         this.githubProfile = githubProfile;
+        this.favorite = favorite;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -37,6 +39,7 @@ public class CandidateMinDTO {
             this.githubProfile = new GithubProfileDTO(entity.getGithubProfile().getAvatarUrl(), entity.getGithubProfile().getHtmlUrl());
         }
         this.githubUsername = entity.getGithubUsername();
+        this.favorite = entity.isFavorite();
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();
     }
@@ -61,6 +64,10 @@ public class CandidateMinDTO {
         return githubProfile;
     }
 
+    public boolean isFavorite() {
+        return favorite;
+    }
+
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -68,4 +75,5 @@ public class CandidateMinDTO {
     public Instant getUpdatedAt() {
         return updatedAt;
     }
+
 }
