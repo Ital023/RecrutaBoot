@@ -6,6 +6,7 @@ class CandidateMinModel {
   final String occupation;
   final String githubUsername;
   final GithubProfile githubProfile;
+  final bool isFavorite;
 
   CandidateMinModel({
     required this.id,
@@ -13,6 +14,8 @@ class CandidateMinModel {
     required this.occupation,
     required this.githubUsername,
     required this.githubProfile,
+    required this.isFavorite,
+
   });
 
   factory CandidateMinModel.fromMap(Map<String, dynamic> map) {
@@ -22,6 +25,7 @@ class CandidateMinModel {
       occupation: map['occupation'],
       githubUsername: map['githubUsername'],
       githubProfile: GithubProfile.fromMap(map['githubProfile']),
+      isFavorite: map['favorite'],
     );
   }
 }

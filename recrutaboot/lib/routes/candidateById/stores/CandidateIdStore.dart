@@ -37,4 +37,14 @@ class Candidateidstore {
     isLoading.value = false;
 
   }
+
+  Future updatedFavorite(int id) async{
+    try{
+      await repository.updatedFavorite(id);
+
+    }catch(e) {
+      erro.value = e.toString();
+      print("Erro ta vindo daqui: ${e.toString()}");
+    }
+  }
 }

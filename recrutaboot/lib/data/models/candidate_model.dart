@@ -8,6 +8,8 @@ class CandidateModel {
   final String githubUsername;
   final GithubProfile githubProfile;
   final String linkedinUrl;
+  final bool isFavorite;
+
 
   CandidateModel({
     required this.id,
@@ -17,7 +19,7 @@ class CandidateModel {
     required this.githubUsername,
     required this.githubProfile,
     required this.linkedinUrl,
-
+    required this.isFavorite,
   });
 
   factory CandidateModel.fromMap(Map<String, dynamic> map) {
@@ -28,7 +30,8 @@ class CandidateModel {
       description: map['description'],
       githubUsername: map['githubUsername'],
       githubProfile: GithubProfile.fromMap(map['githubProfile']),
-      linkedinUrl: map['linkedinUrl']
+      linkedinUrl: map['linkedinUrl'],
+      isFavorite: map['favorite']
     );
   }
 }

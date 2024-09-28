@@ -168,7 +168,7 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                           borderRadius: BorderRadius.circular(6)
                                         )
                                       ),onPressed: () {
-                                      
+                                      store.updatedFavorite(item.id);
                                       }, child: Text("Adicionar favoritos")
                                       ),
                                     )

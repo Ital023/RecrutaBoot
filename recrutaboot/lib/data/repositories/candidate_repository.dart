@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:recrutaboot/data/http/exceptions.dart';
 import 'package:recrutaboot/data/http/http_client.dart';
@@ -9,7 +10,7 @@ abstract class ICandidateRepository {
   Future<List<CandidateMinModel>> getCandidatesSortedByDate();
   Future<List<CandidateMinModel>> getCandidates();
   Future<CandidateModel> getCandidateById(int id);
-
+  Future<void> updatedFavorite(int id);
 }
 
 class CandidateRepository implements ICandidateRepository {
@@ -75,6 +76,20 @@ class CandidateRepository implements ICandidateRepository {
       throw new Exception("Loading failed");
     }
     
+  }
+  
+  @override
+  Future<void> updatedFavorite(int id) async {
+     final response = await client.put(url: "http://10.0.2.2:8080/candidate/favorite/${id}");
+
+     if(response.statusCode == 204) {
+      return;
+     }else {
+      throw Exception('Erro ao atualizar favorito');
+      print("Deu ruim no updatedFavorite");
+
+     }
+
   }
 
   
