@@ -73,7 +73,7 @@ public class CandidateService {
     }
 
     @Transactional
-    public CandidateDTO updateFavorite(Long id){
+    public void updateFavorite(Long id){
         try{
             Candidate candidate = repository.getReferenceById(id);
 
@@ -81,8 +81,6 @@ public class CandidateService {
             candidate.setUpdatedAt(Instant.now());
 
             candidate = repository.save(candidate);
-
-            return new CandidateDTO(candidate);
         }catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Usuario nao encontrado");
         }
