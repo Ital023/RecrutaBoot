@@ -7,6 +7,7 @@ import io.github.ital023.RecrutaBootBackend.entities.Candidate;
 import io.github.ital023.RecrutaBootBackend.entities.GithubProfile;
 import io.github.ital023.RecrutaBootBackend.repositories.CandidateRepository;
 import io.github.ital023.RecrutaBootBackend.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,9 +65,27 @@ public class CandidateService {
             candidate.getGithubProfile().setCandidate(candidate);
         }
 
+        candidate.setFavorite(false);
+
         candidate = repository.save(candidate);
 
         return new CandidateDTO(candidate);
+    }
+
+    @Transactional
+    public CandidateDTO updateFavorite(Long id){
+        try{
+            Candidate candidate = repository.getReferenceById(id);
+
+            candidate.setFavorite(!candidate.isFavorite());
+            candidate.setUpdatedAt(Instant.now());
+
+            candidate = repository.save(candidate);
+
+            return new CandidateDTO(candidate);
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Usuario nao encontrado");
+        }
     }
 
     private GithubProfileDTO searchGithubProfile(String githubUsername) {
@@ -85,6 +104,7 @@ public class CandidateService {
         candidate.setOccupation(candidateMinDTO.getOccupation());
         candidate.setGithubUsername(candidateMinDTO.getGithubUsername());
         candidate.setCreatedAt(Instant.now());
+        candidate.setUpdatedAt(Instant.now());
         if(response != null) {
             candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
         }
@@ -96,10 +116,12 @@ public class CandidateService {
         candidate.setGithubUsername(candidateDTO.getGithubUsername());
         candidate.setDescription(candidateDTO.getDescription());
         candidate.setCreatedAt(Instant.now());
+        candidate.setUpdatedAt(Instant.now());
         if(response != null) {
             candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
         }
         candidate.setLinkedinUrl(candidateDTO.getLinkedinUrl());
+        candidate.setFavorite(candidateDTO.isFavorite());
     }
 
 

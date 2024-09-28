@@ -14,8 +14,9 @@ public class CandidateDTO {
     private String githubUsername;
     private GithubProfileDTO githubProfile;
     private Instant createdAt;
+    private Instant updatedAt;
     private String linkedinUrl;
-
+    private boolean favorite;
 
 
     public CandidateDTO(Candidate entity) {
@@ -27,14 +28,16 @@ public class CandidateDTO {
         }
         this.githubUsername = entity.getGithubUsername();
         this.createdAt = entity.getCreatedAt();
+        this.updatedAt = entity.getUpdatedAt();
         this.occupation = entity.getOccupation();
         this.linkedinUrl = entity.getLinkedinUrl();
+        this.favorite = entity.isFavorite();
     }
 
     public CandidateDTO() {
     }
 
-    public CandidateDTO(Long id, String name, String occupation, String description, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt, String linkedinUrl) {
+    public CandidateDTO(Long id, String name, String occupation, String description, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt, Instant updatedAt, String linkedinUrl, boolean favorite) {
         this.id = id;
         this.name = name;
         this.occupation = occupation;
@@ -42,7 +45,9 @@ public class CandidateDTO {
         this.githubUsername = githubUsername;
         this.githubProfile = githubProfile;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.linkedinUrl = linkedinUrl;
+        this.favorite = favorite;
     }
 
     public Long getId() {
@@ -73,7 +78,15 @@ public class CandidateDTO {
         return createdAt;
     }
 
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
     public String getLinkedinUrl() {
         return linkedinUrl;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
     }
 }

@@ -2,6 +2,7 @@ package io.github.ital023.RecrutaBootBackend.controllers;
 
 import io.github.ital023.RecrutaBootBackend.dto.CandidateDTO;
 import io.github.ital023.RecrutaBootBackend.dto.CandidateMinDTO;
+import io.github.ital023.RecrutaBootBackend.entities.Candidate;
 import io.github.ital023.RecrutaBootBackend.services.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,6 +48,13 @@ public class CandidateController {
                 .buildAndExpand(candidateDTO.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(candidateDTO);
+    }
+
+    @PutMapping("/favorite/{id}")
+    public ResponseEntity<CandidateDTO> updateFavorite(@PathVariable Long id) {
+        CandidateDTO candidateDTO = service.updateFavorite(id);
+
+        return ResponseEntity.ok(candidateDTO);
     }
 
 }

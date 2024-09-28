@@ -21,24 +21,31 @@ public class Candidate {
 
     private String linkedinUrl;
 
+    private boolean favorite;
+
     @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL)
     private GithubProfile githubProfile;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
 
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updatedAt;
+
     public Candidate() {
     }
 
-    public Candidate(Long id, String name, String occupation, String description, String githubUsername, GithubProfile githubProfile, Instant createdAt, String linkedinUrl) {
+    public Candidate(Long id, String name, String occupation, String description, String githubUsername, String linkedinUrl, boolean favorite, GithubProfile githubProfile, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.occupation = occupation;
         this.description = description;
         this.githubUsername = githubUsername;
+        this.linkedinUrl = linkedinUrl;
+        this.favorite = favorite;
         this.githubProfile = githubProfile;
         this.createdAt = createdAt;
-        this.linkedinUrl = linkedinUrl;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -103,5 +110,20 @@ public class Candidate {
 
     public void setLinkedinUrl(String linkedinUrl) {
         this.linkedinUrl = linkedinUrl;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

@@ -13,17 +13,20 @@ public class CandidateMinDTO {
     private String githubUsername;
     private GithubProfileDTO githubProfile;
     private Instant createdAt;
+    private Instant updatedAt;
+
 
     public CandidateMinDTO() {
     }
 
-    public CandidateMinDTO(Long id, String name, String occupation, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt) {
+    public CandidateMinDTO(Long id, String name, String occupation, String githubUsername, GithubProfileDTO githubProfile, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.occupation = occupation;
         this.githubUsername = githubUsername;
         this.githubProfile = githubProfile;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public CandidateMinDTO(Candidate entity) {
@@ -35,6 +38,7 @@ public class CandidateMinDTO {
         }
         this.githubUsername = entity.getGithubUsername();
         this.createdAt = entity.getCreatedAt();
+        this.updatedAt = entity.getUpdatedAt();
     }
 
     public Long getId() {
@@ -59,5 +63,9 @@ public class CandidateMinDTO {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
     }
 }
