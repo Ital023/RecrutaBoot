@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recrutaboot/routes/candidateById/candidate_id_page.dart';
 import 'package:recrutaboot/routes/candidates/candidates_page.dart';
+import 'package:recrutaboot/routes/favoritesCandidates/favorites_candidates_page.dart';
 import 'package:recrutaboot/routes/home/home_page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -14,6 +15,10 @@ class AppWidget extends StatelessWidget {
       GoRoute(
       path: '/viewCandidates',
       builder: (context, state) => const CandidatesPage(),
+    ),
+    GoRoute(
+      path: '/favoriteCandidates',
+      builder: (context, state) => const FavoritesCandidatesPage(),
     ),
     GoRoute(
       path: '/candidate/:candidateId',

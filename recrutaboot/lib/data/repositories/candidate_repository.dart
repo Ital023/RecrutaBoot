@@ -11,6 +11,7 @@ abstract class ICandidateRepository {
   Future<List<CandidateMinModel>> getCandidates();
   Future<CandidateModel> getCandidateById(int id);
   Future<void> updatedFavorite(int id);
+  Future<List<CandidateMinModel>> getFavorites();
 }
 
 class CandidateRepository implements ICandidateRepository {
@@ -42,7 +43,7 @@ class CandidateRepository implements ICandidateRepository {
   Future<List<CandidateMinModel>> getCandidatesSortedByDate() async {
     final response = await client.get(
         url:
-            "http://10.0.2.2:8080/candidate/pageable?size=3&page=0&sort=createdAt,desc&name=");
+            "http://10.0.2.2:8080/candidate/pageable?size=3&page=0&sort=updatedAt,desc&name=");
 
     if (response.statusCode == 200) {
       final List<CandidateMinModel> candidates = [];
@@ -90,6 +91,26 @@ class CandidateRepository implements ICandidateRepository {
 
      }
 
+  }
+  
+  @override
+  Future<List<CandidateMinModel>> getFavorites() async {
+    final response = await client.get(url: "http://10.0.2.2:8080/candidate/favorite");
+
+    if (response.statusCode == 200) {
+      final List<CandidateMinModel> candidates = [];
+      final body = jsonDecode(response.body);
+
+      body.map((item) {
+        final CandidateMinModel candidate = CandidateMinModel.fromMap(item);
+        candidates.add(candidate);
+      }).toList();
+      return candidates;
+    } else if (response.statusCode == 404) {
+      throw NotFoundException("A URL não está válida");
+    } else {
+      throw new Exception("Loading failed");
+    }
   }
 
   

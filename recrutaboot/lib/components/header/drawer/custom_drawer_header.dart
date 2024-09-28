@@ -56,7 +56,7 @@ class CustomDrawerHeader extends StatelessWidget {
             leading: Icon(Icons.star),
             title: Text("Meus favoritos"),
             onTap: () {
-              context.go("/viewCandidates");
+              context.go("/favoriteCandidates");
             },
           ),
           ListTile(
