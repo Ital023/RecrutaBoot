@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:recrutaboot/data/http/exceptions.dart';
 import 'package:recrutaboot/data/http/http_client.dart';
@@ -12,6 +11,8 @@ abstract class ICandidateRepository {
   Future<CandidateModel> getCandidateById(int id);
   Future<void> updatedFavorite(int id);
   Future<List<CandidateMinModel>> getFavorites();
+  Future<void> createCandidate(CandidateModelCreate candidate);
+
 }
 
 class CandidateRepository implements ICandidateRepository {
@@ -87,7 +88,6 @@ class CandidateRepository implements ICandidateRepository {
       return;
      }else {
       throw Exception('Erro ao atualizar favorito');
-      print("Deu ruim no updatedFavorite");
 
      }
 
@@ -112,6 +112,19 @@ class CandidateRepository implements ICandidateRepository {
       throw new Exception("Loading failed");
     }
   }
-
   
-}
+  @override
+  Future<void> createCandidate(CandidateModelCreate candidate) async {
+    final body = candidate.toMap();
+
+    final response = await client.post(
+      url: "http://10.0.2.2:8080/candidate",
+      body: body,
+    );
+
+    if (response.statusCode == 201) {
+    } else {
+      throw Exception("Erro ao criar candidato");
+    }
+  }
+  }

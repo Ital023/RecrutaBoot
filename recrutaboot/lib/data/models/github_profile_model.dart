@@ -9,5 +9,7 @@ class GithubProfile {
       avatarUrl: map['avatar_url'],
       htmlUrl: map['html_url'],
     );
+
+    
   }
 }
