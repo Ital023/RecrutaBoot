@@ -164,12 +164,14 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                     SizedBox(width: 10),
                                     Expanded(
                                       child: FilledButton(style: FilledButton.styleFrom(
+                                        backgroundColor: item.isFavorite ? Colors.red : Color.fromARGB(255, 31, 97, 151),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(6)
                                         )
                                       ),onPressed: () {
                                       store.updatedFavorite(item.id);
-                                      }, child: Text("Adicionar favoritos")
+                                      context.go("/");
+                                      }, child: Text(item.isFavorite ? "Remover Favoritos" : "Adicionar Favoritos")
                                       ),
                                     )
                                   ],
