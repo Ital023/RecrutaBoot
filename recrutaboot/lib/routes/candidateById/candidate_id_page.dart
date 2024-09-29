@@ -108,16 +108,36 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                   children: [
                                     Row(
                                       children: [
-                                        TextButton(onPressed: () {
-                                          repository.deleteCandidate(item.id);
-                                        }, child: Row(
-                                          children: [
-                                            Icon(Icons.delete_forever),
-                                                                                                                      SizedBox(width: 6),
-                                            Text("Deletar",style: TextStyle(fontSize: 18),),
-                                            
-                                          ],
-                                        ))
+                                        TextButton(
+                                  onPressed: () => showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) => AlertDialog(
+                                      title: const Text('Deletar candidato'),
+                                      content: const Text('Tem certeza que deseja deletar-lo?'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(context, 'Cancel'),
+                                          child: const Text('Cancelar'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            repository.deleteCandidate(item.id);
+                                            context.go("/");
+                                          },
+                                          child: const Text('Sim'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  child: const Row(
+                                    children: [
+                                      Icon(Icons.delete_forever),                    SizedBox(width: 6),
+                                      Text("Deletar",style: TextStyle(fontSize: 18),)
+                                    ],
+                                  ),
+                                )
+                                          
+                                        
                                       ],
                                     ),
                                     Row(
