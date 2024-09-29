@@ -6,6 +6,7 @@ abstract class IHttpClient{
   Future get({required String url});
   Future put({required String url});
   Future post({required String url, required Map<String, dynamic> body});
+  Future delete({required String url});
 
 }
 
@@ -65,4 +66,22 @@ class HttpClient implements IHttpClient {
       rethrow;
     }
   }
+  
+   @override
+  Future<http.Response> delete({required String url}) async {
+    try {
+      final response = await client.delete(Uri.parse(url));
+      
+      if (response.statusCode != 204) {
+        throw Exception('Falha ao carregar dados: ${response.statusCode}');
+      }
+
+      return response;
+    } catch (e) {
+      print("Erro ao fazer a requisição: $e");
+      rethrow;
+    }
+  }
+
+
 }

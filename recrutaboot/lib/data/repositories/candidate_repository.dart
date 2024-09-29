@@ -12,6 +12,8 @@ abstract class ICandidateRepository {
   Future<void> updatedFavorite(int id);
   Future<List<CandidateMinModel>> getFavorites();
   Future<void> createCandidate(CandidateModelCreate candidate);
+  Future<void> deleteCandidate(int id);
+
 
 }
 
@@ -127,4 +129,18 @@ class CandidateRepository implements ICandidateRepository {
       throw Exception("Erro ao criar candidato");
     }
   }
+  
+  @override
+  Future<void> deleteCandidate(int id) async {
+    final response = await client.delete(url: "http://10.0.2.2:8080/candidate/${id}");
+
+     if(response.statusCode == 204) {
+      return;
+     }else {
+      throw Exception('Erro ao atualizar favorito');
+
+    }
   }
+
+
+}

@@ -171,7 +171,7 @@ class _CandidatesPageState extends State<RegisterCandidatesPage> {
 
       context.go("/");
     }else {
-      print("Form invalido");
+      
     }
   }
 

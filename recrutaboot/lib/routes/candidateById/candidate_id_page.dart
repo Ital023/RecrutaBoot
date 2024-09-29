@@ -20,6 +20,8 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
   final Candidateidstore store =
       Candidateidstore(repository: CandidateRepository(client: HttpClient()));
 
+  final CandidateRepository repository = CandidateRepository(client: HttpClient());
+
   @override
   void initState() {
     super.initState();
@@ -102,29 +104,45 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                   height: 20,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    GestureDetector(
-                                      onTap: () async {
-                                        final githubUrl =
-                                            '${item.githubProfile.htmlUrl}';
-                                        Uri githubUri = Uri.parse(githubUrl);
-
-                                        if (await canLaunchUrl(githubUri)) {
-                                          await launchUrl(githubUri);
-                                        } else {
-                                          throw 'Não foi possível abrir o link $githubUrl';
-                                        }
-                                      },
-                                      child: Container(
-                                        height: 50,
-                                        width: 50,
-                                        child: Image.asset(
-                                            "assets/images/githubLogo.png"),
-                                      ),
+                                    Row(
+                                      children: [
+                                        TextButton(onPressed: () {
+                                          repository.deleteCandidate(item.id);
+                                        }, child: Row(
+                                          children: [
+                                            Icon(Icons.delete_forever),
+                                                                                                                      SizedBox(width: 6),
+                                            Text("Deletar",style: TextStyle(fontSize: 18),),
+                                            
+                                          ],
+                                        ))
+                                      ],
                                     ),
-                                    SizedBox(width: 10),
-                                    GestureDetector(
+                                    Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () async {
+                                            final githubUrl =
+                                                '${item.githubProfile.htmlUrl}';
+                                            Uri githubUri = Uri.parse(githubUrl);
+                                        
+                                            if (await canLaunchUrl(githubUri)) {
+                                              await launchUrl(githubUri);
+                                            } else {
+                                              throw 'Não foi possível abrir o link $githubUrl';
+                                            }
+                                          },
+                                          child: Container(
+                                            height: 50,
+                                            width: 50,
+                                            child: Image.asset(
+                                                "assets/images/githubLogo.png"),
+                                          ),
+                                        ),
+                                        SizedBox(width: 10),
+                                        GestureDetector(
                                       onTap: () async {
                                         final linkedinUrl =
                                             '${item.linkedinUrl}';
@@ -144,6 +162,11 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                             "assets/images/linkedinIcon.png"),
                                       ),
                                     ),
+
+
+                                      ],
+                                    )
+                                      
                                   ],
                                 ),
                                 SizedBox(height: 18),
