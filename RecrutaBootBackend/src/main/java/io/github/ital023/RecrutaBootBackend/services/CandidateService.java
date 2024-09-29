@@ -52,11 +52,18 @@ public class CandidateService {
         return new CandidateDTO(candidate);
     }
 
+    @Transactional(readOnly = true)
+    public List<CandidateMinDTO> getAllFavorites() {
+        List<Candidate> candidates = repository.searchFavorites();
+
+        return candidates.stream().map(x -> new CandidateMinDTO(x)).toList();
+    }
+
     @Transactional
     public CandidateDTO save(CandidateDTO candidateDTO){
         GithubProfileDTO response = null;
 
-        if(!candidateDTO.getGithubUsername().isEmpty()){
+        if(candidateDTO.getGithubUsername() != null && !candidateDTO.getGithubUsername().isEmpty()){
             response = searchGithubProfile(candidateDTO.getGithubUsername());
         }
 
@@ -76,6 +83,26 @@ public class CandidateService {
     }
 
     @Transactional
+    public CandidateDTO updateCandidate(CandidateDTO candidateDTO, Long id) {
+        try {
+            Candidate entity = repository.getReferenceById(id);
+            GithubProfileDTO response = null;
+
+            if(candidateDTO.getGithubUsername() != null && !candidateDTO.getGithubUsername().isEmpty()){
+                response = searchGithubProfile(candidateDTO.getGithubUsername());
+            }
+
+            copyDtoToEntity(candidateDTO,entity,response);
+
+            entity = repository.save(entity);
+
+            return new CandidateDTO(entity);
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+    }
+
+    @Transactional
     public void updateFavorite(Long id){
         try{
             Candidate candidate = repository.getReferenceById(id);
@@ -87,6 +114,19 @@ public class CandidateService {
         }catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Usuario nao encontrado");
         }
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(Long id){
+        if(!repository.existsById(id)){
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+        try{
+            repository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Falha na integridade referencial");
+        }
+
     }
 
     private GithubProfileDTO searchGithubProfile(String githubUsername) {
@@ -126,23 +166,5 @@ public class CandidateService {
         candidate.setFavorite(candidateDTO.isFavorite());
     }
 
-    @Transactional(readOnly = true)
-    public List<CandidateMinDTO> getAllFavorites() {
-        List<Candidate> candidates = repository.searchFavorites();
 
-        return candidates.stream().map(x -> new CandidateMinDTO(x)).toList();
-    }
-
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public void delete(Long id){
-        if(!repository.existsById(id)){
-            throw new ResourceNotFoundException("Recurso não encontrado");
-        }
-        try{
-            repository.deleteById(id);
-        }catch (DataIntegrityViolationException e){
-            throw new DatabaseException("Falha na integridade referencial");
-        }
-
-    }
 }
