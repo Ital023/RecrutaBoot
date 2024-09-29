@@ -6,14 +6,17 @@ import io.github.ital023.RecrutaBootBackend.dto.GithubProfileDTO;
 import io.github.ital023.RecrutaBootBackend.entities.Candidate;
 import io.github.ital023.RecrutaBootBackend.entities.GithubProfile;
 import io.github.ital023.RecrutaBootBackend.repositories.CandidateRepository;
+import io.github.ital023.RecrutaBootBackend.services.exceptions.DatabaseException;
 import io.github.ital023.RecrutaBootBackend.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
@@ -123,10 +126,23 @@ public class CandidateService {
         candidate.setFavorite(candidateDTO.isFavorite());
     }
 
-
+    @Transactional(readOnly = true)
     public List<CandidateMinDTO> getAllFavorites() {
         List<Candidate> candidates = repository.searchFavorites();
 
         return candidates.stream().map(x -> new CandidateMinDTO(x)).toList();
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(Long id){
+        if(!repository.existsById(id)){
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+        try{
+            repository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Falha na integridade referencial");
+        }
+
     }
 }
