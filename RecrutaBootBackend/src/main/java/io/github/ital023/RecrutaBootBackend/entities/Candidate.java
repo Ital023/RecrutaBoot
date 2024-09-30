@@ -23,7 +23,7 @@ public class Candidate {
 
     private boolean favorite;
 
-    @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
     private GithubProfile githubProfile;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
