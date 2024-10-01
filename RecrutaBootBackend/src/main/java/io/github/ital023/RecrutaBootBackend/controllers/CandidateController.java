@@ -57,12 +57,6 @@ public class CandidateController {
         return ResponseEntity.created(uri).body(candidateDTO);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CandidateDTO> update(@RequestBody CandidateDTO candidateDTO,@PathVariable Long id) {
-        candidateDTO = service.updateCandidate(candidateDTO, id);
-        return ResponseEntity.ok(candidateDTO);
-    }
-
     @PutMapping("/favorite/{id}")
     public ResponseEntity<Void> updateFavorite(@PathVariable Long id) {
         service.updateFavorite(id);

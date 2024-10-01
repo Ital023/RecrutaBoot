@@ -27,10 +27,10 @@ import java.util.List;
 public class CandidateService {
 
     @Autowired
-    private CandidateRepository repository;
+    private GithubProfileService githubProfileService;
 
     @Autowired
-    private GithubProfileService githubProfileService;
+    private CandidateRepository repository;
 
     @Transactional(readOnly = true)
     public List<CandidateMinDTO> findAll() {
@@ -52,27 +52,23 @@ public class CandidateService {
         return new CandidateDTO(candidate);
     }
 
-    @Transactional(readOnly = true)
-    public List<CandidateMinDTO> getAllFavorites() {
-        List<Candidate> candidates = repository.searchFavorites();
-
-        return candidates.stream().map(x -> new CandidateMinDTO(x)).toList();
-    }
-
     @Transactional
-    public CandidateDTO save(CandidateDTO candidateDTO) {
+    public CandidateDTO save(CandidateDTO candidateDTO){
         GithubProfileDTO response = null;
         Candidate candidate = new Candidate();
+        candidate.setCreatedAt(Instant.now());
 
         copyDtoToEntity(candidateDTO, candidate);
 
+
         candidate.setFavorite(false);
 
-        candidate.setCreatedAt(Instant.now());
 
-        GithubProfile githubProfile = githubProfileService.insert(candidate.getGithubUsername(), candidate);
+        if(!candidateDTO.getGithubUsername().isEmpty()){
+            GithubProfile githubProfile = githubProfileService.insert(candidate);
+            candidate.setGithubProfile(githubProfile);
 
-        candidate.setGithubProfile(githubProfile);
+        }
 
         candidate = repository.save(candidate);
 
@@ -80,53 +76,38 @@ public class CandidateService {
     }
 
     @Transactional
-    public CandidateDTO updateCandidate(CandidateDTO candidateDTO, Long id) {
-        try {
-            Candidate entity = repository.getReferenceById(id);
-
-            copyDtoToEntity(candidateDTO, entity);
-
-            if(!candidateDTO.getGithubUsername().equals(entity.getGithubUsername())) {
-                GithubProfile githubProfile = githubProfileService.insert(entity.getGithubUsername(), entity);
-
-                entity.setGithubProfile(githubProfile);
-            }
-
-            entity = repository.save(entity);
-
-            return new CandidateDTO(entity);
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Recurso não encontrado");
-        }
-    }
-
-    @Transactional
-    public void updateFavorite(Long id) {
-        try {
+    public void updateFavorite(Long id){
+        try{
             Candidate candidate = repository.getReferenceById(id);
 
             candidate.setFavorite(!candidate.isFavorite());
             candidate.setUpdatedAt(Instant.now());
 
             candidate = repository.save(candidate);
-        } catch (EntityNotFoundException e) {
+        }catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Usuario nao encontrado");
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<CandidateMinDTO> getAllFavorites() {
+        List<Candidate> candidates = repository.searchFavorites();
+
+        return candidates.stream().map(x -> new CandidateMinDTO(x)).toList();
+    }
+
     @Transactional(propagation = Propagation.SUPPORTS)
-    public void delete(Long id) {
-        if (!repository.existsById(id)) {
+    public void delete(Long id){
+        if(!repository.existsById(id)){
             throw new ResourceNotFoundException("Recurso não encontrado");
         }
-        try {
+        try{
             repository.deleteById(id);
-        } catch (DataIntegrityViolationException e) {
+        }catch (DataIntegrityViolationException e){
             throw new DatabaseException("Falha na integridade referencial");
         }
 
     }
-
 
 
     private void copyDtoToEntityMin(CandidateMinDTO candidateMinDTO, Candidate candidate, GithubProfileDTO response) {
@@ -136,7 +117,7 @@ public class CandidateService {
         candidate.setFavorite(candidateMinDTO.isFavorite());
         candidate.setCreatedAt(Instant.now());
         candidate.setUpdatedAt(Instant.now());
-        if (response != null) {
+        if(response != null) {
             candidate.setGithubProfile(new GithubProfile(response.getAvatarUrl(), response.getHtmlUrl()));
         }
     }

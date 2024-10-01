@@ -1,7 +1,6 @@
 package io.github.ital023.RecrutaBootBackend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.ital023.RecrutaBootBackend.entities.GithubProfile;
 
 public class GithubProfileDTO {
 
@@ -17,11 +16,6 @@ public class GithubProfileDTO {
     public GithubProfileDTO(String avatarUrl, String htmlUrl) {
         this.avatarUrl = avatarUrl;
         this.htmlUrl = htmlUrl;
-    }
-
-    public GithubProfileDTO(GithubProfile githubProfile) {
-        this.avatarUrl = githubProfile.getAvatarUrl();
-        this.htmlUrl = githubProfile.getHtmlUrl();
     }
 
     public String getAvatarUrl() {

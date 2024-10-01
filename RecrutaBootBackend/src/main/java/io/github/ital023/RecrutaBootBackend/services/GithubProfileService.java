@@ -1,5 +1,6 @@
 package io.github.ital023.RecrutaBootBackend.services;
 
+import io.github.ital023.RecrutaBootBackend.dto.CandidateDTO;
 import io.github.ital023.RecrutaBootBackend.dto.GithubProfileDTO;
 import io.github.ital023.RecrutaBootBackend.entities.Candidate;
 import io.github.ital023.RecrutaBootBackend.entities.GithubProfile;
@@ -8,37 +9,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.Instant;
 
 @Service
 public class GithubProfileService {
 
     @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
     private GithubProfileRepository repository;
 
-    @Transactional
-    public GithubProfile insert(String githubUsername, Candidate candidate) {
-        GithubProfileDTO dto = searchGithubProfile(githubUsername);
-        GithubProfile githubProfile = new GithubProfile();
+    @Autowired
+    private RestTemplate restTemplate;
 
-        copyDtoToEntity(dto, githubProfile, candidate);
+    public GithubProfile insert(Candidate candidate) {
+        GithubProfileDTO dto = searchGithubProfile(candidate.getGithubUsername());
+        GithubProfile entity = new GithubProfile();
 
-        githubProfile = repository.save(githubProfile);
+        copyDtoToEntity(dto, entity, candidate);
 
-        return githubProfile;
+        entity = repository.save(entity);
+
+        return entity;
     }
 
     private GithubProfileDTO searchGithubProfile(String githubUsername) {
-
         String apiUrl = "https://api.github.com/users/" + githubUsername;
 
         ResponseEntity<GithubProfileDTO> response = restTemplate.getForEntity(apiUrl, GithubProfileDTO.class);
 
-        if (response.getStatusCode() == HttpStatus.OK) {
+        if(response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();
         }
         throw new RuntimeException("Erro ao buscar o usuário do GitHub");
@@ -50,6 +50,4 @@ public class GithubProfileService {
         entity.setCandidate(candidate);
     }
 
-
 }
-
