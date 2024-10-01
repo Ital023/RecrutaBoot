@@ -38,8 +38,11 @@ public class GithubProfileService {
     @Transactional
     public void update(Long id, String githubUsername) {
         GithubProfile entity = repository.getReferenceById(id);
+        GithubProfileDTO dto = new GithubProfileDTO();
 
-        GithubProfileDTO dto = searchGithubProfile(githubUsername);
+        if(githubUsername != null) {
+             dto = searchGithubProfile(githubUsername);
+        }
 
         copyDtoToEntity(dto, entity);
 

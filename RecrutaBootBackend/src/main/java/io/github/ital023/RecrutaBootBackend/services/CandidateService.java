@@ -77,9 +77,14 @@ public class CandidateService {
         Candidate entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado"));
 
-        if(!dto.getGithubUsername().trim().equals(entity.getGithubUsername().trim())) {
+        if(dto.getGithubUsername() != null) {
+            if(!dto.getGithubUsername().equals(entity.getGithubUsername())) {
+                githubProfileService.update(entity.getId(), dto.getGithubUsername());
+            }
+        } else {
             githubProfileService.update(entity.getId(), dto.getGithubUsername());
         }
+
 
         copyDtoToEntity(dto, entity);
 
