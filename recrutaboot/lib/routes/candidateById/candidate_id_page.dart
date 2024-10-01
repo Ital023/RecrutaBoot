@@ -129,15 +129,21 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                       ],
                                     ),
                                   ),
-                                  child: const Row(
+                                  child: const Column(
                                     children: [
-                                      Icon(Icons.delete_forever),                    SizedBox(width: 6),
+                                      Icon(Icons.delete_forever),                    
                                       Text("Deletar",style: TextStyle(fontSize: 18),)
                                     ],
                                   ),
-                                )
-                                          
-                                        
+                                ),
+                                TextButton(onPressed: () {
+                                  context.go('/editCandidate/${item.id}');
+                                }, child: const Column(
+                                    children: [
+                                      Icon(Icons.mode_edit),                    
+                                      Text("Editar",style: TextStyle(fontSize: 18),)
+                                    ],
+                                  ))
                                       ],
                                     ),
                                     Row(

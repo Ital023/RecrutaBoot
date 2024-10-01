@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:recrutaboot/routes/EditCandidate/edit_candidates_page.dart';
 import 'package:recrutaboot/routes/RegisterCandidate/register_candidates_page.dart';
 import 'package:recrutaboot/routes/candidateById/candidate_id_page.dart';
 import 'package:recrutaboot/routes/candidates/candidates_page.dart';
@@ -30,6 +31,13 @@ class AppWidget extends StatelessWidget {
       builder: (context, state) {
         final candidateId = state.pathParameters['candidateId']!;
         return CandidateIdPage(candidateId: int.parse(candidateId));
+      },
+    ),
+    GoRoute(
+      path: '/editCandidate/:candidateId',
+      builder: (context, state) {
+        final candidateId = state.pathParameters['candidateId']!;
+        return EditCandidatesPage(candidateId: int.parse(candidateId));
       },
     ),
     ],

@@ -13,6 +13,8 @@ abstract class ICandidateRepository {
   Future<List<CandidateMinModel>> getFavorites();
   Future<void> createCandidate(CandidateModelCreate candidate);
   Future<void> deleteCandidate(int id);
+  Future<void> updateCandidate(CandidateModelCreate candidate, int id);
+
 
 
 }
@@ -84,7 +86,7 @@ class CandidateRepository implements ICandidateRepository {
   
   @override
   Future<void> updatedFavorite(int id) async {
-     final response = await client.put(url: "http://10.0.2.2:8080/candidate/favorite/${id}");
+     final response = await client.putUpatedFavorite(url: "http://10.0.2.2:8080/candidate/favorite/${id}");
 
      if(response.statusCode == 204) {
       return;
@@ -127,6 +129,23 @@ class CandidateRepository implements ICandidateRepository {
     if (response.statusCode == 201) {
     } else {
       throw Exception("Erro ao criar candidato");
+    }
+  }
+
+  @override
+  Future<void> updateCandidate(CandidateModelCreate candidate, int id) async {
+    final body = candidate.toMap();
+
+    print(id);
+
+    final response = await client.put(
+      url: "http://10.0.2.2:8080/candidate/${id}",
+      body: body,
+    );
+
+    if (response.statusCode == 201) {
+    } else {
+      throw Exception("Erro ao editar candidato");
     }
   }
   
