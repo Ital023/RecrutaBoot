@@ -42,7 +42,7 @@ class CustomDrawerHeader extends StatelessWidget {
             leading: Icon(Icons.home),
             title: Text("Home"),
             onTap: () {
-              context.go("/");
+              context.go("/home");
             },
           ),
           ListTile(
@@ -70,7 +70,10 @@ class CustomDrawerHeader extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text("Sair da conta"),
-            onTap: () => null,
+            onTap: () {
+              context.go("/");
+
+            },
           ),
         ],
       ),

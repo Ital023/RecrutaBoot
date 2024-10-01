@@ -6,12 +6,17 @@ import 'package:recrutaboot/routes/candidateById/candidate_id_page.dart';
 import 'package:recrutaboot/routes/candidates/candidates_page.dart';
 import 'package:recrutaboot/routes/favoritesCandidates/favorites_candidates_page.dart';
 import 'package:recrutaboot/routes/home/home_page.dart';
+import 'package:recrutaboot/routes/login/login_page.dart';
 
 class AppWidget extends StatelessWidget {
   final _router = GoRouter(
     routes: [
       GoRoute(
         path: '/',
+        builder: (context, state) => LoginPage(),
+      ),
+      GoRoute(
+        path: '/home',
         builder: (context, state) => HomePage(),
       ),
       GoRoute(

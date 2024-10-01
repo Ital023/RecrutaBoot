@@ -173,7 +173,7 @@ class _CandidatesPageState extends State<EditCandidatesPage> {
 
       store.repository.updateCandidate(candidateModelCreate, widget.candidateId);
 
-      context.go("/");
+      context.go("/home");
     }
   }
 }

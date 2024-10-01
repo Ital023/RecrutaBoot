@@ -122,7 +122,7 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                         TextButton(
                                           onPressed: () {
                                             repository.deleteCandidate(item.id);
-                                            context.go("/");
+                                            context.go("/home");
                                           },
                                           child: const Text('Sim'),
                                         ),
@@ -201,7 +201,7 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                     Expanded(
                                       child: OutlinedButton(
                                         onPressed: () {
-                                          context.go("/");
+                                          context.go("/home");
                                         },
                                         style: OutlinedButton.styleFrom(
                                           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(6)), ),
@@ -219,7 +219,7 @@ class _CandidateIdPageState extends State<CandidateIdPage> {
                                         )
                                       ),onPressed: () {
                                       store.updatedFavorite(item.id);
-                                      context.go("/");
+                                      context.go("/home");
                                       }, child: Text(item.isFavorite ? "Remover Favoritos" : "Adicionar Favoritos")
                                       ),
                                     )

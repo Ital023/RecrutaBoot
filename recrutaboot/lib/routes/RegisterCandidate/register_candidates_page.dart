@@ -169,7 +169,7 @@ class _CandidatesPageState extends State<RegisterCandidatesPage> {
 
       repository.createCandidate(candidateModelCreate);
 
-      context.go("/");
+      context.go("/home");
     }else {
       
     }
