@@ -55,24 +55,38 @@ public class CandidateService {
     @Transactional
     public CandidateDTO save(CandidateDTO candidateDTO){
         GithubProfileDTO response = null;
+
         Candidate candidate = new Candidate();
         candidate.setCreatedAt(Instant.now());
-
         copyDtoToEntity(candidateDTO, candidate);
-
-
         candidate.setFavorite(false);
 
 
         if(!candidateDTO.getGithubUsername().isEmpty()){
             GithubProfile githubProfile = githubProfileService.insert(candidate);
             candidate.setGithubProfile(githubProfile);
-
         }
 
         candidate = repository.save(candidate);
 
         return new CandidateDTO(candidate);
+    }
+
+    @Transactional
+    public CandidateDTO update(CandidateDTO dto, Long id) {
+        Candidate entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado"));
+
+        if(!dto.getGithubUsername().trim().equals(entity.getGithubUsername().trim())) {
+            githubProfileService.update(entity.getId(), dto.getGithubUsername());
+        }
+
+        copyDtoToEntity(dto, entity);
+
+        entity = repository.save(entity);
+
+
+        return new CandidateDTO(entity);
     }
 
     @Transactional
