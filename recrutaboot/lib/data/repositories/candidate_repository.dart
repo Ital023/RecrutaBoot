@@ -136,14 +136,12 @@ class CandidateRepository implements ICandidateRepository {
   Future<void> updateCandidate(CandidateModelCreate candidate, int id) async {
     final body = candidate.toMap();
 
-    print(id);
-
     final response = await client.put(
       url: "http://10.0.2.2:8080/candidate/${id}",
       body: body,
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
     } else {
       throw Exception("Erro ao editar candidato");
     }
@@ -156,7 +154,7 @@ class CandidateRepository implements ICandidateRepository {
      if(response.statusCode == 204) {
       return;
      }else {
-      throw Exception('Erro ao atualizar favorito');
+      throw Exception('Erro ao deletar favorito');
 
     }
   }
