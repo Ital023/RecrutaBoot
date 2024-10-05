@@ -108,6 +108,9 @@ class _LoginPageState extends State<LoginPage> {
 botaoPrincipalClicado(){
     if(_usuarioController.text == "root" && _senhaController.text == "root") {
       context.go("/home");
+    }else {
+      context.go("/home");
+
     }
 
 
