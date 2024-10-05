@@ -18,7 +18,14 @@ Durante o desenvolvimento, aprofundei meus conhecimentos em todas essas tecnolog
 ![Mobile 1](/assetsRecrutaBoot/login.png) 
 ![Mobile 2](/assetsRecrutaBoot/home.png)
 ![Mobile 3](/assetsRecrutaBoot/drawer.png) 
-![Mobile 4](/assertsReadme/candidates.png)
+![Mobile 4](/assetsRecrutaBoot/candidates.png)
+![Mobile 5](/assetsRecrutaBoot/candidateDetails.png)
+![Mobile 6](/assetsRecrutaBoot/buttonFavorite.png)
+![Mobile 7](/assetsRecrutaBoot/deleteUser.png)
+![Mobile 8](/assetsRecrutaBoot/updateUser.png)
+![Mobile 9](/assetsRecrutaBoot/register.png)
+![Mobile 10](/assetsRecrutaBoot/validation.png)
+
 
 # Tecnologias utilizadas
 ## Back end
@@ -27,40 +34,26 @@ Durante o desenvolvimento, aprofundei meus conhecimentos em todas essas tecnolog
 - JPA / Hibernate
 - Maven
 ## Front end
-- HTML / CSS / JS / TypeScript
-- ReactJS
-## Implantação em produção
-- Back end: Heroku
-- Front end web: Netlify
-- Banco de dados: Postgresql
+- Flutter
+- Dart
+- GoRouter
+- Http Flutter
+- SOLID
 
 # Rotas
-&#9679;	Produtos
+&#9679;	Candidates
 
-| Método | Caminho                      | Descrição                                           | Role Necessária                  |
-| ------ | ---------------------------- | -------------------------------------------------- | -------------------------------- |
-| GET    | /products/{id}             | Retorna um produto específico pelo ID.              | Nenhuma                          |
-| GET    | /products                  | Retorna uma lista paginada de produtos, podendo filtrar pelo nome. | Nenhuma            |
-| POST   | /products                  | Adiciona um novo produto.                           | ROLE_ADMIN                     |
-| PUT    | /products/{id}             | Atualiza os dados de um produto específico pelo ID. | ROLE_ADMIN                     |
-| DELETE | /products/{id}             | Remove um produto específico pelo ID.               | ROLE_ADMIN                     |
+| Método | Caminho                      | Descrição                                           | 
+| ------ | ---------------------------- | -------------------------------------------------- |
+| GET    | /candidate/{id}            | Retorna um candidato específico pelo ID.              |
+| GET    | /candidate/pageable        | Retorna uma lista paginada de candidatos, permitindo o front end escolher quantos usuarios a serem exibidos, ordenando ou não pelo ultima atualização do usuário. |
+| POST   | /candidate                  | Adiciona um novo candidato                          | 
+| PUT    | /candidate/{id}             | Atualiza os dados de um candidato específico pelo ID. | 
+| PUT    | /candidate/favorite/{id}    | Atualiza o status de favorito do candidadto. | 
+| DELETE | /candidate/{id}             | Remove um produto específico pelo ID.               |
 
-&#9679;	Pedidos
-| Método | Caminho                      | Descrição                                           | Role Necessária                      |
-| ------ | ---------------------------- | -------------------------------------------------- | ------------------------------------ |
-| GET    | /orders/{id}               | Retorna uma ordem específica pelo ID.              | ROLE_ADMIN ou ROLE_CLIENT        |
-| POST   | /orders                    | Cria uma nova ordem.                               | ROLE_CLIENT                        |
-
-&#9679;	Categorias
-| Método | Caminho          | Descrição                                      | Role Necessária |
-| ------ | ---------------- | --------------------------------------------- | --------------- |
-| GET    | /categories    | Retorna a lista de todas as categorias.       | Nenhuma         |
-
-&#9679;	Usuario
-| Método | Caminho        | Descrição                                        | Role Necessária                      |
-| ------ | -------------- | ----------------------------------------------- | ------------------------------------ |
-| GET    | /users/me    | Retorna as informações do usuário autenticado.  | ROLE_ADMIN ou ROLE_CLIENT        |
-
+# Diferenciais
+Neste projeto, desenvolvi uma lógica para preencher a foto do usuário com base no input do nome de usuário do GitHub. Utilizei a API oficial do GitHub para obter informações, como avatar_url e html_url, permitindo o uso da foto já disponível na web.
 
 # Como executar o projeto
 
@@ -69,24 +62,28 @@ Pré-requisitos: Java 21
 
 ```bash
 # clonar repositório
-git clone https://github.com/Ital023/DSCommerce.git
+git clone --branch main https://github.com/Ital023/RecrutaBoot.git
+
+# navegar até RecrutaBootBackend
 
 # executar o projeto
 ./mvnw spring-boot:run
 ```
 
-## Front end web
-Pré-requisitos: npm / yarn
+## Front end Mobile Flutter
+Pré-requisitos: Flutter
 
 ```bash
 # clonar repositório
-git clone https://github.com/Ital023/DSCommerce-FrontEnd.git
+git clone --branch main https://github.com/Ital023/RecrutaBoot.git
+
+# navegar até RecrutaBoot
 
 # instalar dependências
-yarn install
+flutter pub get
 
 # executar o projeto
-yarn start
+F5
 ```
 ## 🤝 Colaboradores
 
